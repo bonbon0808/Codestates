@@ -3,6 +3,7 @@ package com.codestates.coffee.dto;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -24,7 +25,4 @@ public class CoffeePostDto {
     @Pattern(regexp = "^([A-Za-z]){3}$",
             message = "커피 코드는 3자리 영문이어야 합니다.")
     private String coffeeCode;
-
-    @Setter
-    private String coffeeImageName;
 }

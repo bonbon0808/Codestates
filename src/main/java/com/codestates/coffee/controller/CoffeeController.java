@@ -26,23 +26,17 @@ import java.util.List;
 public class CoffeeController {
     private final CoffeeService coffeeService;
     private final CoffeeMapper mapper;
-    private final StorageService storageService;
 
-    public CoffeeController(CoffeeService coffeeService, CoffeeMapper coffeeMapper, StorageService storageService) {
+    public CoffeeController(CoffeeService coffeeService, CoffeeMapper coffeeMapper) {
         this.coffeeService = coffeeService;
         this.mapper = coffeeMapper;
-        this.storageService = storageService;
     }
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity postCoffee(@Valid @RequestPart CoffeePostDto coffeePostDto,
                                      @RequestPart MultipartFile coffeeImage) {
 
-        String coffeeImageName = coffeeImage.getOriginalFilename();
-        coffeePostDto.setCoffeeImageName(coffeeImageName);
-
-        storageService.store(coffeeImage);
-        Coffee coffee = coffeeService.createCoffee(mapper.coffeePostDtoToCoffee(coffeePostDto));
+        Coffee coffee = coffeeService.createCoffee(mapper.coffeePostDtoToCoffee(coffeePostDto), coffeeImage);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.coffeeToCoffeeResponseDto(coffee)),

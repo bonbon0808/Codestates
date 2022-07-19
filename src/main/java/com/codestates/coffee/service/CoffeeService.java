@@ -8,18 +8,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
+@Transactional
 @Service
 public class CoffeeService {
     private final CoffeeRepository coffeeRepository;
+    private final StorageService storageService;
 
-    public CoffeeService(CoffeeRepository coffeeRepository) {
+    public CoffeeService(CoffeeRepository coffeeRepository, StorageService storageService) {
         this.coffeeRepository = coffeeRepository;
+        this.storageService = storageService;
     }
 
-    public Coffee createCoffee(Coffee coffee) {
+    public Coffee createCoffee(Coffee coffee, MultipartFile coffeeImage) {
         // 커피 코드를 대문자로 변경
         String coffeeCode = coffee.getCoffeeCode().toUpperCase();
 
@@ -27,6 +32,8 @@ public class CoffeeService {
         verifyExistCoffee(coffeeCode);
         coffee.setCoffeeCode(coffeeCode);
 
+        // 커피 이미지 저장
+        storageService.store(coffeeImage);
         return coffeeRepository.save(coffee);
     }
 
