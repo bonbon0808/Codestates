@@ -17,11 +17,12 @@ import java.util.Optional;
  */
 @Service
 public class MemberService {
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
+
 
     public Member createMember(Member member) {
         // 이미 등록된 이메일인지 확인
@@ -33,6 +34,8 @@ public class MemberService {
     public Member updateMember(Member member) {
         Member findMember = findVerifiedMember(member.getMemberId());
 
+
+        // TODO 리팩토링 포인트
         Optional.ofNullable(member.getName())
                 .ifPresent(name -> findMember.setName(name));
         Optional.ofNullable(member.getPhone())
@@ -57,8 +60,7 @@ public class MemberService {
     }
 
     public Member findVerifiedMember(long memberId) {
-        Optional<Member> optionalMember =
-                memberRepository.findById(memberId);
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
         Member findMember =
                 optionalMember.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
