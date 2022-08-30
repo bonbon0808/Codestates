@@ -19,3 +19,7 @@ INSERT INTO MEMBER (email, name, phone) VALUES
 ('hgd18@gmail.com', '홍길동18', '010-1818-1818'),
 ('hgd19@gmail.com', '홍길동19', '010-1919-1919'),
 ('hgd20@gmail.com', '홍길동20', '010-2020-2020');
+
+
+INSERT INTO COFFEE (kor_name, eng_name, price, coffee_code) VALUES ('카라멜 라떼', 'Caramel Latte', 4500, 'CRL');
+INSERT INTO COFFEE (kor_name, eng_name, price, coffee_code) VALUES ('바닐라 라떼', 'Vanilla Latte', 5000, 'VNL');
