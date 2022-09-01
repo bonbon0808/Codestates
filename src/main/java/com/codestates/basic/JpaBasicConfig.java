@@ -31,9 +31,9 @@ public class JpaBasicConfig {
 //			example03();
 //          example04();
 //          example05();
-//          analyzePersistContextExpiration();  // 컨텐츠에 없는 참고 코드
-// 			persistGeneratedIdentity();         // 컨텐츠에 없는 참고 코드
-// 			persistAndCommitGeneratedIdentity(); // 컨텐츠에 없는 참고 코드
+// 			persistAndNoCommitGeneratedIdentity();         // 컨텐츠에 없는 참고 코드
+ 			persistAndCommitGeneratedIdentity(); // 컨텐츠에 없는 참고 코드
+//          analyzePersistContextExpiration();  // 미확인된 테스트 코드
         };
     }
 
@@ -157,86 +157,69 @@ public class JpaBasicConfig {
     }
 
     // 컨텐츠에 없는 참고 코드
-    private void persistGeneratedIdentity() {
-        System.out.println("No TX ---------------------------");
-        Member member = new Member("hgd@gmail.com");
+    private void persistAndNoCommitGeneratedIdentity() {
+        System.out.println("Begin TX ---------------------------");
+        MemberByIdentity member = new MemberByIdentity("hgd@gmail.com");
+        tx.begin();
 
-        /**
-         * - commit을 안했으므로, 1차 캐시에 저장되고, 테이블에는 저장이 안된다.
-         * @GeneratedValue(strategy = GenerationType.IDENTITY)이므로,
-         * 테이블에 저장하기 전까지는 식별자를 알 수 없다.
-         * - memberId가 비어 있는 상태로 저장된다.
-         */
         System.out.println("persist: ------------------------------");
         em.persist(member);
 
 
-        /**
-         * - 식별자가 없으므로, memberId는 비어 있다. 따라서 1차 캐시에 원하는 데이터가 없다.
-         * - 그래서 테이블에서 조회한다.
-         * - 그런데 commit이 아직 되지 않았으므로, 테이블에도 없다.
-         */
-        Member resultMember = em.find(Member.class, 1L);
+        MemberByIdentity resultMember = em.find(MemberByIdentity.class, 1L);
 
-        // 따라서 NullPointerException 발생
+        // commit을 안했음
+        System.out.println("No commit: ------------------------------");
         System.out.println("Id: " + resultMember.getMemberId() + ", email: " +
                 resultMember.getEmail());
     }
 
     // 컨텐츠에 없는 참고 코드
     private void persistAndCommitGeneratedIdentity() {
-        System.out.println(" TX Begin: ------------------------------ ");
+        System.out.println("Begin TX : ------------------------------ ");
         tx.begin();
-        Member member = new Member("hgd@gmail.com");
+        MemberByIdentity member = new MemberByIdentity("hgd@gmail.com");
 
-        /**
-         * - IDENTITY 전략은 persist() 실행 시, 1차 캐시에 식별자가 없는 상태로 저장.
-         * - commit이 없어도 테이블에 저장.
-         * - 식별자를 1차 캐시에 업데이트.
-         */
+
         System.out.println("Persist: ------------------------------ ");
         em.persist(member);
 
         System.out.println("Commit: ------------------------------ ");
         tx.commit();
 
-        /**
-         * - 식별자가 있다. memberId가 1차 캐시에 채워져있다.
-         * - 그래서 1차 캐시에서 조회한다.
-         * - 쿼리가 실행되지 않는다.
-         */
-        Member resultMember1 = em.find(Member.class, 1L);
+
+        MemberByIdentity resultMember1 = em.find(MemberByIdentity.class, 1L);
 
         System.out.println("Find from 1th Cache: ------------------------------ ");
         System.out.println("Id: " + resultMember1.getMemberId() + ", email: " + resultMember1.getEmail());
 
         System.out.println("Find from DB: ------------------------------ ");
         Member resultMember2 = em.find(Member.class, 2L);
-        System.out.println(resultMember2 == null);
+        System.out.println("exists resultMember2?: " + resultMember2 == null);
 
     }
 
     // 컨텐츠에 없는 참고 코드
     // tx 범위와 영속성 컨텍스트(EntityManager) 생존 범위가 같다????
-    private void analyzePersistContextExpiration() {
-        Member member = new Member("hgd@gmail.com");
-
-        EntityManager em = createMember(member);
-        System.out.println("find ------------------------------");
-        Member resultMember2 = em.find(Member.class, 1L);
-        System.out.println("resultMember2: " + resultMember2.getEmail());
-    }
-
-    private EntityManager createMember(Member member) {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-
-        tx.begin();
-        em.persist(member);
-
-        tx.commit();
-        Member foundMember = em.find(Member.class, member.getMemberId());
-        System.out.println("foundMember: " + foundMember.getEmail());
-        return em;
-    }
+//    private void analyzePersistContextExpiration() {
+//        Member member = new Member("hgd@gmail.com");
+//
+//        EntityManager em = createMember(member);
+//        System.out.println("find ------------------------------");
+//        Member resultMember2 = em.find(Member.class, 1L);
+//        System.out.println("resultMember2: " + resultMember2.getEmail());
+//    }
+//
+//    private EntityManager createMember(Member member) {
+//        EntityManager em = emf.createEntityManager();
+//        EntityTransaction tx = em.getTransaction();
+//
+//        tx.begin();
+//        em.persist(member);
+//
+//        tx.commit();
+//        Member foundMember = em.find(Member.class, member.getMemberId());
+//        System.out.println("foundMember: " + foundMember.getEmail());
+//        return em;
+//    }
 }
