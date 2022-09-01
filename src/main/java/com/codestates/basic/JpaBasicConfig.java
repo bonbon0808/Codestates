@@ -33,7 +33,6 @@ public class JpaBasicConfig {
 //          example05();
 // 			persistAndNoCommitGeneratedIdentity();         // 컨텐츠에 없는 참고 코드
 // 			persistAndCommitGeneratedIdentity(); // 컨텐츠에 없는 참고 코드
-          analyzePersistenceContextExpiration();  // 미확인된 테스트 코드
         };
     }
 
