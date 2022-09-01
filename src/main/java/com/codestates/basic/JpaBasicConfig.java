@@ -32,8 +32,8 @@ public class JpaBasicConfig {
 //          example04();
 //          example05();
 // 			persistAndNoCommitGeneratedIdentity();         // 컨텐츠에 없는 참고 코드
- 			persistAndCommitGeneratedIdentity(); // 컨텐츠에 없는 참고 코드
-//          analyzePersistContextExpiration();  // 미확인된 테스트 코드
+// 			persistAndCommitGeneratedIdentity(); // 컨텐츠에 없는 참고 코드
+          analyzePersistenceContextExpiration();  // 미확인된 테스트 코드
         };
     }
 
@@ -200,26 +200,46 @@ public class JpaBasicConfig {
     }
 
     // 컨텐츠에 없는 참고 코드
-    // tx 범위와 영속성 컨텍스트(EntityManager) 생존 범위가 같다????
-//    private void analyzePersistContextExpiration() {
-//        Member member = new Member("hgd@gmail.com");
-//
-//        EntityManager em = createMember(member);
-//        System.out.println("find ------------------------------");
-//        Member resultMember2 = em.find(Member.class, 1L);
-//        System.out.println("resultMember2: " + resultMember2.getEmail());
-//    }
-//
-//    private EntityManager createMember(Member member) {
-//        EntityManager em = emf.createEntityManager();
-//        EntityTransaction tx = em.getTransaction();
-//
-//        tx.begin();
-//        em.persist(member);
-//
-//        tx.commit();
-//        Member foundMember = em.find(Member.class, member.getMemberId());
-//        System.out.println("foundMember: " + foundMember.getEmail());
-//        return em;
-//    }
+    // tx 범위와 영속성 컨텍스트(EntityManager) 생존 범위. 현재는 J2EE의 환경이므로 Persistent Context를 공유한다.
+    private void analyzePersistenceContextExpiration() {
+        Member member = new Member("hgd1@gmail.com");
+
+        createMember(member);
+
+        EntityManager em2 = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        System.out.println("EntityManager 2: " + em2);
+
+        tx.begin();
+
+        System.out.println("find 2------------------------------");
+
+        Member resultMember2 = em.find(Member.class, 1L);
+        resultMember2.setEmail("hgd2@gmail.com");
+
+        System.out.println("update ------------------------------");
+
+        tx.commit();
+
+
+        System.out.println("find 3------------------------------");
+        Member resultMember3 = em.find(Member.class, 1L);
+
+        System.out.println("resultMember3: " + resultMember3.getEmail());
+    }
+
+    private void createMember(Member member) {
+        EntityManager em1 = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        System.out.println("EntityManager 1: " + em1);
+
+        tx.begin();
+        em.persist(member);
+
+        tx.commit();
+        Member resultMember1 = em.find(Member.class, member.getMemberId());
+        System.out.println("resultMember1: " + resultMember1.getEmail());
+    }
 }

@@ -25,8 +25,8 @@ public class Order {
     @Column(nullable = false, name = "LAST_MODIFIED_AT")
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
-    @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
+    @ManyToOne
     private Member member;
 
     public void addMember(Member member) {
