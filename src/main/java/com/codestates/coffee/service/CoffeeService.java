@@ -28,7 +28,7 @@ public class CoffeeService {
         // 커피 코드를 대문자로 변경
         String coffeeCode = coffee.getCoffeeCode().toUpperCase();
 
-        // 이미지 정보 추가가
+        // 이미지 정보 추가
        coffee.setCoffeeImageName(coffeeImage.getOriginalFilename());
 
         // 이미 등록된 커피 코드인지 확인
