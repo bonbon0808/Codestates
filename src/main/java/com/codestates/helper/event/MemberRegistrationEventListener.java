@@ -19,6 +19,10 @@ import org.springframework.stereotype.Component;
 public class MemberRegistrationEventListener {
     @Value("${mail.subject.member.registration}")
     private String subject;
+
+    @Value("${mail.template.name.member.join}")
+    private String templateName;
+
     private final EmailSender emailSender;
     private final MemberService memberService;
 
@@ -33,7 +37,7 @@ public class MemberRegistrationEventListener {
         try {
             String[] to = new String[]{event.getMember().getEmail()};
             String message = event.getMember().getEmail() + "님, 회원 가입이 성공적으로 완료되었습니다.";
-            emailSender.sendEmail(to, subject, message);
+            emailSender.sendEmail(to, subject, message, templateName);
         } catch (MailSendException e) {
             e.printStackTrace();
             log.error("MailSendException: rollback for Member Registration:");

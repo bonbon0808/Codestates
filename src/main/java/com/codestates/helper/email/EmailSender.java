@@ -14,8 +14,8 @@ public class EmailSender {
         this.emailSendable = emailSendable;
     }
 
-    public void sendEmail(String[] to, String subject, String message) throws MailSendException,
+    public void sendEmail(String[] to, String subject, String message, String templateName) throws MailSendException,
             InterruptedException {
-        emailSendable.send(to, subject, message);
+        emailSendable.send(to, subject, message, templateName);
     }
 }

@@ -13,12 +13,12 @@ public class SimpleEmailSendable implements EmailSendable {
     }
 
     @Override
-    public void send(String[] to, String subject, String message) {
+    public void send(String[] to, String subject, String message, String templateName) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(to);
         mailMessage.setText(message);
         mailMessage.setSubject(subject);
-        mailMessage.setText(message);
+//        mailMessage.setText(message);
         javaMailSender.send(mailMessage);
 
         log.info("Sent simple email!");
