@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-//@Configuration
+@Configuration
 //@EnableWebSecurity(debug = true)
 public class SecurityConfigurationV2 {
     @Value("${spring.security.oauth2.client.registration.google.clientId}")
