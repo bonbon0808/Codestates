@@ -28,7 +28,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 /**
  * JWT 검증 기능 추가
  */
-//@Configuration
+@Configuration
 //@EnableWebSecurity(debug = true)
 public class SecurityConfigurationV2 {
     private final JwtTokenizer jwtTokenizer;
