@@ -7,16 +7,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Section3Week2JpaApplication {
 
 	public static void main(String[] args) {
-		System.setProperty("spring.profiles.active", "basic");
-//		System.setProperty("spring.profiles.active", "table");
-//		System.setProperty("spring.profiles.active", "column");
-//		System.setProperty("spring.profiles.active", "id-direct");
-//		System.setProperty("spring.profiles.active", "id-identity");
-//		System.setProperty("spring.profiles.active", "id-sequence");
-//		System.setProperty("spring.profiles.active", "one-to-many-uni");
-//		System.setProperty("spring.profiles.active", "many-to-many-bi");
-//		System.setProperty("spring.profiles.active", "many-to-one-uni");
-//		System.setProperty("spring.profiles.active", "many-to-one-bi");
+		System.setProperty("spring.profiles.active", "basic");  // Chapter - JPA(Java Persistence API)란?
+//		System.setProperty("spring.profiles.active", "table");  // Chapter - 엔티티 매핑 > 엔티티와 테이블 간의 매핑
+//		System.setProperty("spring.profiles.active", "id-direct");  // Chapter - 기본키 매핑 > 기본키 직접 할당 전략
+//		System.setProperty("spring.profiles.active", "id-identity");  // Chapter - 기본키 매핑 > IDENTITY 전략
+//		System.setProperty("spring.profiles.active", "id-sequence");  // Chapter - 기본키 매핑 > SEQUENCE 전략
+//		System.setProperty("spring.profiles.active", "column"); // Chapter - 필드와 컬럼간의 매핑 > 엔티티와 테이블 간의 매핑
+//		System.setProperty("spring.profiles.active", "one-to-many-uni");  // 일대다 단방향 연관 관계
+//		System.setProperty("spring.profiles.active", "many-to-many-bi");  // 다대다 단방향 연관 관계
+//		System.setProperty("spring.profiles.active", "many-to-one-uni");  // 다대일 단방향 연관 관계
+//		System.setProperty("spring.profiles.active", "many-to-one-bi");   // 다대일/일대다 양방향 연관 관계
 
 		SpringApplication.run(Section3Week2JpaApplication.class, args);
 	}
