@@ -35,13 +35,13 @@ public class JpaColumnMappingConfig {
 
     private void testEmailNotNull() {
         tx.begin();
-        em.persist(new Member());
+        em.persist(new Member(null, "hong gil dong", "010-1111-1111"));
         tx.commit();
     }
 
     private void testEmailUpdatable() {
         tx.begin();
-        em.persist(new Member("hgd@gmail.com"));
+        em.persist(new Member("hgd@gmail.com", "hong gil dong", "010-1111-1111"));
         Member member = em.find(Member.class, 1L);
         member.setEmail("hgd@yahoo.co.kr");
         tx.commit();
@@ -49,8 +49,8 @@ public class JpaColumnMappingConfig {
 
     private void testEmailUnique() {
         tx.begin();
-        em.persist(new Member("hgd@gmail.com"));
-        em.persist(new Member("hgd@gmail.com"));
+        em.persist(new Member("hgd@gmail.com", "hong gil dong", "010-1111-1111"));
+        em.persist(new Member("hgd@gmail.com", "hong gil dong", "010-1111-1111"));
         tx.commit();
     }
 
