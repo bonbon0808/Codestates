@@ -26,7 +26,7 @@ public class JpaBasicConfig {
 
         System.out.println("# Active Profile: basic");
         return args -> {
-//			example01();
+			example01();
 //			example02();
 //			example03();
 //          example04();
