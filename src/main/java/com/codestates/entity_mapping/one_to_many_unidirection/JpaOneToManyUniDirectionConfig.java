@@ -23,9 +23,7 @@ public class JpaOneToManyUniDirectionConfig {
         this.tx = em.getTransaction();
         System.out.println("# Active Profile: one-to-many-uni");
 
-        return args -> {
-            mappingOneToManyUniDirection();
-        };
+        return args -> mappingOneToManyUniDirection();
     }
 
     private void mappingOneToManyUniDirection() {
