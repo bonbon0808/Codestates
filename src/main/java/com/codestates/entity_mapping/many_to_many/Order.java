@@ -28,7 +28,7 @@ public class Order {
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
     @ManyToMany
-    @JoinTable(name = "ORDER_PRODUCT", joinColumns = @JoinColumn(name = "ORDER_ID"),
+    @JoinTable(name = "ORDER_COFFEE", joinColumns = @JoinColumn(name = "ORDER_ID"),
             inverseJoinColumns = @JoinColumn(name = "COFFEE_ID"))
     private List<Coffee> coffees = new ArrayList<>();
 

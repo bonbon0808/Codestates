@@ -26,13 +26,13 @@ public class JpaBasicConfig {
 
         System.out.println("# Active Profile: basic");
         return args -> {
-			example01();
+//			example01();
 //			example02();
 //			example03();
 //          example04();
 //          example05();
 // 			persistAndNoCommitGeneratedIdentity();         // 컨텐츠에 없는 참고 코드
-// 			persistAndCommitGeneratedIdentity(); // 컨텐츠에 없는 참고 코드
+ 			persistAndCommitGeneratedIdentity(); // 컨텐츠에 없는 참고 코드
         };
     }
 
@@ -194,7 +194,6 @@ public class JpaBasicConfig {
 
         System.out.println("Find from DB: ------------------------------ ");
         Member resultMember2 = em.find(Member.class, 2L);
-        System.out.println("exists resultMember2?: " + resultMember2 == null);
-
+        System.out.println("Does not exists resultMember2?: " + (resultMember2 == null));
     }
 }

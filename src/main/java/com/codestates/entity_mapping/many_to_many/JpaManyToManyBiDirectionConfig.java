@@ -30,7 +30,7 @@ public class JpaManyToManyBiDirectionConfig {
 
     private void mappingManyToManyBiDirection() {
         tx.begin();
-        Coffee coffee = new Coffee("카페라떼", "Cafe Lattee", 4000);
+        Coffee coffee = new Coffee("카페라떼", "Cafe Latte", 4000);
         Order order = new Order();
         order.addCoffee(coffee);
         coffee.addOrder(order);
