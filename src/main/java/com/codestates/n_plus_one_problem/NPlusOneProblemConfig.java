@@ -27,7 +27,7 @@ public class NPlusOneProblemConfig {
 
         return args -> {
 //            nPlusOneProblemExample();   // N + 1 문제가 발생하는 예제
-//            fetchJoinJPQLTest();            // Fetch Join을 이용해서 한 번에 가져오기
+            fetchJoinJPQLTest();            // Fetch Join을 이용해서 한 번에 가져오기
         };
     }
 
@@ -62,11 +62,11 @@ public class NPlusOneProblemConfig {
 
     private void fetchJoinJPQLTest() throws InterruptedException {
         tx.begin();
-        com.codestates.fetch_strategy.Member member = new com.codestates.fetch_strategy.Member("hgd@gmail.com", "Hong Gil Dong",
+        Member member = new Member("hgd@gmail.com", "Hong Gil Dong",
                 "010-1111-1111");
-        com.codestates.fetch_strategy.Order order1 = new com.codestates.fetch_strategy.Order();
+        Order order1 = new Order();
         member.addOrder(order1);
-        com.codestates.fetch_strategy.Order order2 = new com.codestates.fetch_strategy.Order();
+        Order order2 = new Order();
         member.addOrder(order1);
         member.addOrder(order2);
 
@@ -80,10 +80,10 @@ public class NPlusOneProblemConfig {
         em.clear();
 
         // JPQL 사용
-        TypedQuery<com.codestates.fetch_strategy.Member> query =
-                em.createQuery("select m from Member m join fetch m.orders p",  com.codestates.fetch_strategy.Member.class);
+        TypedQuery<Member> query =
+                em.createQuery("select m from Member m join fetch m.orders p", Member.class);
 
-        List<com.codestates.fetch_strategy.Member> findMembers = query.getResultList();
+        List<Member> findMembers = query.getResultList();
 
         System.out.println(findMembers.size());
     }

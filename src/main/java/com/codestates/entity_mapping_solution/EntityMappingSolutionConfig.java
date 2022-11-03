@@ -51,6 +51,7 @@ public class EntityMappingSolutionConfig {
         em.persist(stamp);
         em.persist(order);
         em.persist(orderCoffee);
+
         tx.commit();
 
         Order resultOrder = em.find(Order.class, 1L);

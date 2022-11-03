@@ -27,7 +27,7 @@ public class FetchStrategyConfig {
 
         return args -> {
 //            oneToManyFetchLazyTest();   // @oneToMany 일 경우 지연 로딩 테스트
-//            oneToManyFetchLazyJPQLTest(); // JPQL에 해당되는 엔티티만 조회.
+            oneToManyFetchLazyJPQLTest(); // JPQL에 해당되는 엔티티만 조회.
         };
     }
 
