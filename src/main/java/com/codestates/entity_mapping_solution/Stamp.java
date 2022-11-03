@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-// homework solution 추가
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,7 +20,7 @@ public class Stamp {
     private int stampCount;
 
     @Setter(AccessLevel.NONE)
-//    @OneToOne( fetch = FetchType.EAGER)
+
     @OneToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;

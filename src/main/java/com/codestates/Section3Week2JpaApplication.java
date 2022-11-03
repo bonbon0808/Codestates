@@ -17,7 +17,9 @@ public class Section3Week2JpaApplication {
 //		System.setProperty("spring.profiles.active", "many-to-many-bi");  // 다대다 단방향 연관 관계
 //		System.setProperty("spring.profiles.active", "many-to-one-uni");  // 다대일 단방향 연관 관계
 //		System.setProperty("spring.profiles.active", "many-to-one-bi");   // 다대일/일대다 양방향 연관 관계
-		System.setProperty("spring.profiles.active", "entity-mapping-solution");   // 실습 과제 테스트
+//		System.setProperty("spring.profiles.active", "entity-mapping-solution");   // 실습 과제 테스트
+		System.setProperty("spring.profiles.active", "fetch-strategy");   // FETCH 전략 예제 코드
+//		System.setProperty("spring.profiles.active", "n-plus-one-problem");   // N + 1 문제 관련 예제 코드
 
 		SpringApplication.run(Section3Week2JpaApplication.class, args);
 	}
