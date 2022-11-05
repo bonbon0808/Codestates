@@ -34,10 +34,18 @@ JPA의 전체적인 동작 방식과 사용법을 이해하기 위한 예제 코
 ---
 
 ### 엔티티 매핑 테스트
-엔티티 간의 연관관계 매핑이 정상적으로 이루어졌는지 테스트하는 코드입니다.
+엔티티 간의 연관관계 매핑이 정상적으로 이루어졌는지 테스트하는 예제 코드입니다.
 
 * 소스 코드 경로
   * [src/main/java/com/codestates/entity_mapping_test]()
+
+---
+
+### Fetch 전략
+Fetch 전략(LAZY/EAGER)을 테스트하는 예제 코드입니다.
+
+* 소스 코드 경로
+  * [src/main/java/com/codestates/fetch_strategy]()
 
 ---
 
