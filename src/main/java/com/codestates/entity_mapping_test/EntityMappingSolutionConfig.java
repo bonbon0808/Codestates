@@ -1,6 +1,5 @@
-package com.codestates.entity_mapping_solution;
+package com.codestates.entity_mapping_test;
 
-import com.codestates.entity_mapping.many_to_many.JpaManyToManyBiDirectionConfig;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;

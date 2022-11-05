@@ -1,4 +1,4 @@
-package com.codestates.entity_mapping_solution;
+package com.codestates.entity_mapping_test;
 
 import lombok.AccessLevel;
 import lombok.Getter;
