@@ -53,4 +53,4 @@ Fetch 전략(LAZY/EAGER)을 테스트하는 예제 코드입니다.
 JPA에서의 N + 1 문제를 해결하기 위한 예제 코드입니다.
 * 소스 코드 경로
   * **Fetch Join을 사용한 예제 코드**
-   * [src/main/java/com/codestates/order/service/CoffeeService](https://github.com/codestates-seb/be-reference-jpa/tree/main/src/main/java/com/codestates/n_plus_one_problem)
+    * [src/main/java/com/codestates/order/service/CoffeeService](https://github.com/codestates-seb/be-reference-jpa/tree/main/src/main/java/com/codestates/n_plus_one_problem)
