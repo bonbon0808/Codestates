@@ -6,6 +6,7 @@ import com.codestates.exception.ExceptionCode;
 import com.codestates.helper.StampCalculator;
 import com.codestates.member.entity.Member;
 import com.codestates.member.service.MemberService;
+import com.codestates.member.service.RealMemberService;
 import com.codestates.order.entity.Order;
 import com.codestates.order.repository.OrderRepository;
 import com.codestates.stamp.Stamp;

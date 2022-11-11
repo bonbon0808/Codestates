@@ -5,8 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -15,10 +14,10 @@ public class AssertionExceptionHamcrestTest {
     @DisplayName("throws NullPointerException when map.get()")
     @Test
     public void assertionThrowExceptionTest() {
-        Throwable actualException = assertThrows(NullPointerException.class,
+        NullPointerException actualException = assertThrows(NullPointerException.class,
                 () -> getCryptoCurrency("XRP"));
 
-        assertThat(actualException.getCause(), is(equalTo(null)));
+        assertThat(actualException.getClass(), is(NullPointerException.class));
     }
 
     @DisplayName("does not throw any Exception when map.get()")

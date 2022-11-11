@@ -6,6 +6,7 @@ import com.codestates.member.dto.MemberDto;
 import com.codestates.member.entity.Member;
 import com.codestates.member.mapper.MemberMapper;
 import com.codestates.member.service.MemberService;
+import com.codestates.member.service.RealMemberService;
 import com.codestates.stamp.Stamp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

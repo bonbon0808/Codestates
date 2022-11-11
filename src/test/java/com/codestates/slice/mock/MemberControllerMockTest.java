@@ -3,7 +3,7 @@ package com.codestates.slice.mock;
 import com.codestates.member.dto.MemberDto;
 import com.codestates.member.entity.Member;
 import com.codestates.member.mapper.MemberMapper;
-import com.codestates.member.service.MemberService;
+import com.codestates.member.service.RealMemberService;
 import com.codestates.stamp.Stamp;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ class MemberControllerMockTest {
     private Gson gson;
 
     @MockBean
-    private MemberService memberService;
+    private RealMemberService memberService;
 
     @Autowired
     private MemberMapper mapper;
@@ -47,7 +47,7 @@ class MemberControllerMockTest {
         Member member = mapper.memberPostToMember(post);
         member.setStamp(new Stamp());  // DTO로 변환될 때 필요하다.
 
-        // Stubbing by Mockito
+        // Stubbing by Mockito: 가짜 객체인 memberService로 가짜 메서드를 호출. 파라미터는 중요하지 않다. 리턴하는 값만 중요하다.
         given(memberService.createMember(Mockito.any(Member.class)))
                 .willReturn(member);
 

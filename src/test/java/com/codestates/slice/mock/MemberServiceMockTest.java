@@ -3,7 +3,7 @@ package com.codestates.slice.mock;
 import com.codestates.exception.BusinessLogicException;
 import com.codestates.member.entity.Member;
 import com.codestates.member.repository.MemberRepository;
-import com.codestates.member.service.MemberService;
+import com.codestates.member.service.RealMemberService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,7 +22,7 @@ public class MemberServiceMockTest {
     private MemberRepository memberRepository;
 
     @InjectMocks
-    private MemberService memberService;
+    private RealMemberService memberService;
 
     @Test
     public void createMemberTest() {

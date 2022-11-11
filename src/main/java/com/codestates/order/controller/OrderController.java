@@ -3,6 +3,7 @@ package com.codestates.order.controller;
 import com.codestates.dto.MultiResponseDto;
 import com.codestates.dto.SingleResponseDto;
 import com.codestates.member.service.MemberService;
+import com.codestates.member.service.RealMemberService;
 import com.codestates.order.dto.OrderPatchDto;
 import com.codestates.order.dto.OrderPostDto;
 import com.codestates.order.entity.Order;

@@ -2,7 +2,7 @@ package com.codestates.helper.event;
 
 import com.codestates.helper.email.EmailSender;
 import com.codestates.member.entity.Member;
-import com.codestates.member.service.MemberService;
+import com.codestates.member.service.RealMemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
@@ -12,14 +12,14 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
 @EnableAsync
-@Configuration
-@Component
+//@Configuration
+//@Component
 @Slf4j
 public class MemberRegistrationEventListener {
     private final EmailSender emailSender;
-    private final MemberService memberService;
+    private final RealMemberService memberService;
 
-    public MemberRegistrationEventListener(EmailSender emailSender, MemberService memberService) {
+    public MemberRegistrationEventListener(EmailSender emailSender, RealMemberService memberService) {
         this.emailSender = emailSender;
         this.memberService = memberService;
     }
