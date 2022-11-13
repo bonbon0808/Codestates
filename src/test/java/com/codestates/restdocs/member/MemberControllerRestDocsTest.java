@@ -27,6 +27,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
@@ -88,6 +89,7 @@ public class MemberControllerRestDocsTest {
                 .andDo(document("post-member",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
+                        // request body
                         requestFields(
                                 List.of(
                                         fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
@@ -95,6 +97,7 @@ public class MemberControllerRestDocsTest {
                                         fieldWithPath("phone").type(JsonFieldType.STRING).description("휴대폰 번호")
                                 )
                         ),
+                        // response body
                         responseFields(
                                 List.of(
                                         fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터"),
