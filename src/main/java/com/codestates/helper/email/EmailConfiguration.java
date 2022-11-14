@@ -36,11 +36,11 @@ public class EmailConfiguration {
         return new MockExceptionEmailSendable();
     }
 
-//    @Primary
     @Bean
     public EmailSendable simpleEmailSendable() {
         return new SimpleEmailSendable(javaMailSender());
     }
+
 
     @Primary
     @Bean
