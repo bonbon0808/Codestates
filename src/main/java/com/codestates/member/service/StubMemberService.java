@@ -11,10 +11,10 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**
- *  - 메서드 구현
- *  - DI 적용
- *  - Spring Data JPA 적용
- *  - 트랜잭션 적용
+ *  Member Stub 데이터를 제공하는 StubMemberService 클래스
+ *  - @PostConstruct를 이용해 의존성 주입(DI)에 대한 초기화 이후 수행될 작업을 추가한다.
+ *      - 여기서는 Stub 데이터를 초기화하도록 함.
+ *  - StubMemberService 클래스가 Bean으로 등록될 수 있도록 BeanConfig에서 Bean을 설정해준다.
  */
 public class StubMemberService implements MemberService {
     private Member stubMember1;
