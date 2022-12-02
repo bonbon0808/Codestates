@@ -39,7 +39,6 @@ public class OrderController {
     @PostMapping
     public ResponseEntity postOrder(@Valid @RequestBody OrderPostDto orderPostDto) {
         Order order = orderService.createOrder(mapper.orderPostDtoToOrder(orderPostDto));
-
         URI location = UriCreator.createUri(ORDER_DEFAULT_URL, order.getOrderId());
 
         return ResponseEntity.created(location).build();
