@@ -19,8 +19,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -64,13 +63,8 @@ class MemberControllerMockTest {
                                 );
 
         // then
-        MvcResult result = actions
-                                .andExpect(status().isCreated())
-                                .andExpect(jsonPath("$.data.email").value(post.getEmail()))
-                                .andExpect(jsonPath("$.data.name").value(post.getName()))
-                                .andExpect(jsonPath("$.data.phone").value(post.getPhone()))
-                                .andReturn();
-
-//        System.out.println(result.getResponse().getContentAsString());
+        actions
+                .andExpect(status().isCreated())
+                .andExpect(header().string("Location", "/v11/members/1"));
     }
 }
