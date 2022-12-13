@@ -48,8 +48,8 @@ public class CoffeeDto {
             this.coffeeId = coffeeId;
         }
 
-        public int getPrice() {
-            return price.orElse(0);
+        public Integer getPrice() {
+            return price.orElse(null);
         }
     }
 
