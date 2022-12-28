@@ -26,12 +26,12 @@ public class JpaBasicConfig {
 
         System.out.println("# Active Profile: basic");
         return args -> {
-			example01();
+//			example01();
 //			example02();
 //			example03();
 //          example04();
 //          example05();
-// 			persistAndNoCommitGeneratedIdentity();         // 컨텐츠에 없는 참고 코드
+ 			persistAndNoCommitGeneratedIdentity();         // 컨텐츠에 없는 참고 코드
 // 			persistAndCommitGeneratedIdentity(); // 컨텐츠에 없는 참고 코드
         };
     }

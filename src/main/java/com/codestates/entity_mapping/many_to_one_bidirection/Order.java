@@ -1,5 +1,6 @@
 package com.codestates.entity_mapping.many_to_one_bidirection;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class Order {
     @Column(nullable = false, name = "LAST_MODIFIED_AT")
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
+    @Setter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
