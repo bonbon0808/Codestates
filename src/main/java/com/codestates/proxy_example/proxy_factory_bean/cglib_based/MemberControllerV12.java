@@ -2,11 +2,13 @@ package com.codestates.proxy_example.proxy_factory_bean.cglib_based;
 
 import com.codestates.dto.MultiResponseDto;
 import com.codestates.dto.SingleResponseDto;
+import com.codestates.member.dto.MemberDto;
 import com.codestates.member.dto.MemberPatchDto;
 import com.codestates.member.dto.MemberPostDto;
 import com.codestates.member.entity.Member;
 import com.codestates.member.mapper.MemberMapper;
 import com.codestates.stamp.Stamp;
+import com.codestates.utils.UriCreator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.net.URI;
 import java.util.List;
 
 
@@ -29,6 +32,7 @@ import java.util.List;
 @Validated
 @Slf4j
 public class MemberControllerV12 {
+    private final static String MEMBER_DEFAULT_URL = "/v11/members";
     private final MemberService memberService;
     private final MemberMapper mapper;
 
@@ -38,25 +42,25 @@ public class MemberControllerV12 {
     }
 
     @PostMapping
-    public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberDto) {
-        Member member = mapper.memberPostDtoToMember(memberDto);
+    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
+        Member member = mapper.memberPostDtoToMember(requestBody);
         member.setStamp(new Stamp()); // homework solution 추가
 
         Member createdMember = memberService.createMember(member);
 
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.memberToMemberResponseDto(createdMember)),
-                HttpStatus.CREATED);
+        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
+
+        return ResponseEntity.created(location).build();
     }
 
     @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(
             @PathVariable("member-id") @Positive long memberId,
-            @Valid @RequestBody MemberPatchDto memberPatchDto) {
-        memberPatchDto.setMemberId(memberId);
+            @Valid @RequestBody MemberDto.Patch requestBody) {
+        requestBody.setMemberId(memberId);
 
         Member member =
-                memberService.updateMember(mapper.memberPatchDtoToMember(memberPatchDto));
+                memberService.updateMember(mapper.memberPatchDtoToMember(requestBody));
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.memberToMemberResponseDto(member)),
