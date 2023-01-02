@@ -32,6 +32,9 @@ import java.util.stream.Collectors;
  */
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
+//    @Mapping(source = "memberId", target = "member.memberId")
+//    Order orderPostDtoToOrder(OrderPostDto orderPostDto);
+
     // 자동 매핑을 할 경우, Order가 OrderCoffee와 연관 관계 매핑을 할 방법이 없으므로 수동 매핑으로 해줘야 됨
     default Order orderPostDtoToOrder(OrderPostDto orderPostDto) {
         Order order = new Order();
