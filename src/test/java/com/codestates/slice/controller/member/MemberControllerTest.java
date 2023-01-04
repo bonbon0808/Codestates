@@ -34,6 +34,7 @@ class MemberControllerTest {
         MemberDto.Post post = new MemberDto.Post("hgd@gmail.com",
                                                         "홍길동",
                                                     "010-1234-5678");
+
         String content = gson.toJson(post);
 
 
@@ -41,8 +42,8 @@ class MemberControllerTest {
         ResultActions actions =
                 mockMvc.perform(
                                     post("/v11/members")
-                                        .accept(MediaType.APPLICATION_JSON)
                                         .contentType(MediaType.APPLICATION_JSON)
+                                        .accept(MediaType.APPLICATION_JSON)
                                         .content(content)
                                 );
 
@@ -65,13 +66,13 @@ class MemberControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(postContent)
                 );
-        long memberId;
-        String location = postActions.andReturn().getResponse().getHeader("Location"); // "/v11/members/1"
-        memberId = Long.parseLong(location.substring(location.lastIndexOf("/") + 1));
 
-        // when / then
+        String location = postActions.andReturn().getResponse().getHeader("Location"); // "/v11/members/1"
+        long memberId = Long.parseLong(location.substring(location.lastIndexOf("/") + 1));
+
+        // when // then
         mockMvc.perform(
-                        get("/v11/members/" + memberId)
+                        get(location)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
