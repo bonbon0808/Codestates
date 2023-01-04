@@ -42,7 +42,6 @@ public class MemberControllerHomeworkV2Test implements MemberControllerTestHelpe
 
     private ResultActions postResultActions;
     private MemberDto.Post post;
-    private MvcResult postResult;
 
     @BeforeEach
     public void init() throws Exception {
