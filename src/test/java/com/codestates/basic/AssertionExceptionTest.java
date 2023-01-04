@@ -8,7 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AssertionExceptionTest {
 
-    @DisplayName("throws NullPointerException when map.get()")
+    @DisplayName("예외 테스트")
+//    @DisplayName("throws NullPointerException when map.get()")
     @Test
     public void assertionThrowExceptionTest() {
         assertThrows(NullPointerException.class, () -> getCryptoCurrency("XRP"));

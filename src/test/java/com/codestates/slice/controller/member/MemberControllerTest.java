@@ -73,9 +73,9 @@ class MemberControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(postContent)
                 );
-        long memberId;
+
         String location = postActions.andReturn().getResponse().getHeader("Location"); // "/v11/members/1"
-        memberId = Long.parseLong(location.substring(location.lastIndexOf("/") + 1));
+        long memberId = Long.parseLong(location.substring(location.lastIndexOf("/") + 1));
 
         // when / then
         mockMvc.perform(
