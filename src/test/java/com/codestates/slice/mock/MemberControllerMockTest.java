@@ -49,7 +49,6 @@ class MemberControllerMockTest {
 
         Member member = mapper.memberPostToMember(post);
         member.setMemberId(1L);
-        member.setStamp(new Stamp());
 
         given(memberService.createMember(Mockito.any()))
                 .willReturn(member);

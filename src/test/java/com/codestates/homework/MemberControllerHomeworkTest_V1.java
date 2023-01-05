@@ -61,12 +61,6 @@ public class MemberControllerHomeworkTest_V1 {
     void postMemberTest() throws Exception {
         // given
         MemberDto.Post post = new MemberDto.Post("hgd@gmail.com","홍길동", "010-1111-1111");
-        MemberDto.Response responseBody = new MemberDto.Response(1L,
-                                                            "hgd@gmail.com",
-                                                            "홍길동",
-                                                            "010-1111-1111",
-                                                                Member.MemberStatus.MEMBER_ACTIVE,
-                                                                new Stamp());
 
         // Stubbing by Mockito
         /**
@@ -77,18 +71,12 @@ public class MemberControllerHomeworkTest_V1 {
 
         /**
          * memberService.createMember(Mockito.any(Member.class))에서 리턴하는 Member 객체는
-         * 다음 로직에서 사용되지 않으므로 단순히 new Member()를 통해 객체만 생성한다.
+         * Location 정보를 위해 memberId 정보만 있으면 되므로 ID 값만 추가해준다.
          */
         Member mockResultMember = new Member();
         mockResultMember.setMemberId(1L);
         given(memberService.createMember(Mockito.any(Member.class))).willReturn(mockResultMember);
 
-        /**
-         * mapper.memberToMemberResponse(Mockito.any(Member.class))에서 리턴하는 Member 객체는
-         * ResponseEntity에 포함되는 response body가 될 것이므로 구체적인 회원 정보가 포함된 responseBody를
-         * willReturn(responseBody)과 같이 전달달다.
-         */
-        given(mapper.memberToMemberResponse(Mockito.any(Member.class))).willReturn(responseBody);
 
         String content = gson.toJson(post);
         URI uri = UriComponentsBuilder.newInstance().path("/v11/members").build().toUri();
