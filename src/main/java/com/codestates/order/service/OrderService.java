@@ -23,6 +23,7 @@ public class OrderService {
     private final MemberService memberService;
     private final OrderRepository orderRepository;
     private final CoffeeService coffeeService;
+
     public OrderService(MemberService memberService,
                         OrderRepository orderRepository,
                         CoffeeService coffeeService) {

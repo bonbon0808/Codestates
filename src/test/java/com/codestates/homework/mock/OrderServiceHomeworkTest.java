@@ -1,4 +1,4 @@
-package com.codestates.homework;
+package com.codestates.homework.mock;
 
 import com.codestates.exception.BusinessLogicException;
 import com.codestates.helper.StubData;
@@ -29,7 +29,9 @@ public class OrderServiceHomeworkTest {
     public void cancelOrderTest() {
         // given
         long orderId = 1L;
-        Order order = StubData.MockOrder.getSingleResponseBody(orderId);
+        Order order = new Order();
+        order.setOrderId(orderId);
+        order.setOrderStatus(Order.OrderStatus.ORDER_CONFIRM);
 
         // Stubbing by Mockito
         given(orderRepository.findById(orderId)).willReturn(Optional.of(order));

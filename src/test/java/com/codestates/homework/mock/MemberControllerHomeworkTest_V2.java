@@ -1,4 +1,4 @@
-package com.codestates.homework;
+package com.codestates.homework.mock;
 
 import com.codestates.helper.MemberControllerTestHelper;
 import com.codestates.helper.StubData;
