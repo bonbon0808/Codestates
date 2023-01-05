@@ -28,8 +28,7 @@ public class MemberServiceMockTest {
     public void createMemberTest() {
         // given
         Member member = new Member("hgd@gmail.com", "홍길동", "010-1111-1111");
-        given(memberRepository.findByEmail(Mockito.anyString()))
-                .willReturn(Optional.of(member));
+        given(memberRepository.findByEmail(Mockito.anyString())).willReturn(Optional.of(member));
 
         // when / then
         assertThrows(BusinessLogicException.class, () -> memberService.createMember(member));

@@ -4,7 +4,6 @@ import com.codestates.member.dto.MemberDto;
 import com.codestates.member.entity.Member;
 import com.codestates.member.mapper.MemberMapper;
 import com.codestates.member.service.MemberService;
-import com.codestates.member.service.RealMemberService;
 import com.codestates.stamp.Stamp;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
@@ -15,14 +14,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -48,11 +47,9 @@ class MemberControllerMockTest {
 
         Member member = mapper.memberPostToMember(post);
         member.setMemberId(1L);
-        member.setStamp(new Stamp());  // DTO로 변환될 때 필요하다.
 
         // Stubbing by Mockito: 가짜 객체인 memberService로 가짜 메서드를 호출. 파라미터는 중요하지 않다. 리턴하는 값만 중요하다.
-        given(memberService.createMember(Mockito.any(Member.class)))
-                .willReturn(member);
+        given(memberService.createMember(Mockito.any(Member.class))).willReturn(member);
 
         String content = gson.toJson(post);
 
