@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -189,7 +189,20 @@ public class MemberControllerHomeworkTest_V1 {
                 new PageImpl<>(List.of(member1, member2),
                                 PageRequest.of(0, 10, Sort.by("memberId").descending()), 2);
 
-        List<MemberDto.Response> responses = StubData.MockMember.getMultiResponseBody();
+        List<MemberDto.Response> responses = List.of(
+                new MemberDto.Response(1L,
+                        "hgd1@gmail.com",
+                        "홍길동1",
+                        "010-1111-1111",
+                        Member.MemberStatus.MEMBER_ACTIVE,
+                        new Stamp()),
+                new MemberDto.Response(2L,
+                        "hgd2@gmail.com",
+                        "홍길동2",
+                        "010-2222-2222",
+                        Member.MemberStatus.MEMBER_ACTIVE,
+                        new Stamp())
+        );
 
         // Stubbing by Mockito
         /**
@@ -210,12 +223,11 @@ public class MemberControllerHomeworkTest_V1 {
 
         // when
         ResultActions actions = mockMvc.perform(
-                MockMvcRequestBuilders
-                        .get(uri)
-                        .params(
-                                queryParams
-                        )
-                        .accept(MediaType.APPLICATION_JSON));
+                                                get(uri)
+                                                .params(
+                                                        queryParams
+                                                )
+                                                .accept(MediaType.APPLICATION_JSON));
 
         // then
         MvcResult result = actions

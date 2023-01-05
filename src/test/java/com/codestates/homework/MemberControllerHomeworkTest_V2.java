@@ -56,7 +56,6 @@ public class MemberControllerHomeworkTest_V2 implements MemberControllerTestHelp
         // given
         // StubData 클래스를 이용해 테스트 데이터를 매 번 정의하는 중복을 제거한다.
         MemberDto.Post post = (MemberDto.Post) StubData.MockMember.getRequestBody(HttpMethod.POST);
-        MemberDto.Response responseBody = StubData.MockMember.getSingleResponseBody();
 
         // Stubbing by Mockito
         given(mapper.memberPostToMember(Mockito.any(MemberDto.Post.class))).willReturn(new Member());
@@ -65,7 +64,6 @@ public class MemberControllerHomeworkTest_V2 implements MemberControllerTestHelp
         mockResultMember.setMemberId(1L);
         given(memberService.createMember(Mockito.any(Member.class))).willReturn(mockResultMember);
 
-        given(mapper.memberToMemberResponse(Mockito.any(Member.class))).willReturn(responseBody);
 
         String content = toJsonContent(post);
         URI uri = getURI();
