@@ -58,22 +58,12 @@ public class MemberControllerRestDocsTest {
         MemberDto.Post post = new MemberDto.Post("hgd@gmail.com", "홍길동", "010-1234-5678");
         String content = gson.toJson(post);
 
-        MemberDto.Response responseDto =
-                new MemberDto.Response(1L,
-                        "hgd@gmail.com",
-                        "홍길동",
-                        "010-1234-5678",
-                        Member.MemberStatus.MEMBER_ACTIVE,
-                        new Stamp());
-
         // willReturn()이 최소한 null은 아니어야 한다.
         given(mapper.memberPostToMember(Mockito.any(MemberDto.Post.class))).willReturn(new Member());
 
         Member mockResultMember = new Member();
         mockResultMember.setMemberId(1L);
         given(memberService.createMember(Mockito.any(Member.class))).willReturn(mockResultMember);
-
-        given(mapper.memberToMemberResponse(Mockito.any(Member.class))).willReturn(responseDto);
 
         // when
         ResultActions actions =
