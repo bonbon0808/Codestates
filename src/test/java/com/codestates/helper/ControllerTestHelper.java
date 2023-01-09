@@ -19,6 +19,16 @@ public interface ControllerTestHelper<T> {
                 .content(content);
     }
 
+    default RequestBuilder patchRequestBuilder(String uri,
+                                               String content) {
+        return MockMvcRequestBuilders
+                .patch(uri)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+
+    }
+
     default RequestBuilder patchRequestBuilder(URI uri,
                                                String content) {
         return MockMvcRequestBuilders
@@ -27,6 +37,12 @@ public interface ControllerTestHelper<T> {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
 
+    }
+
+    default RequestBuilder getRequestBuilder(String uri) {
+        return MockMvcRequestBuilders
+                .get(uri)
+                .accept(MediaType.APPLICATION_JSON);
     }
 
     default RequestBuilder getRequestBuilder(URI uri) {
@@ -42,6 +58,10 @@ public interface ControllerTestHelper<T> {
                         queryParams
                 )
                 .accept(MediaType.APPLICATION_JSON);
+    }
+
+    default RequestBuilder deleteRequestBuilder(String uri) {
+        return MockMvcRequestBuilders.delete(uri);
     }
 
     default RequestBuilder deleteRequestBuilder(URI uri) {
