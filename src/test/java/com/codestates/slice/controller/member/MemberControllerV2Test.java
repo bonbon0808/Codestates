@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional    // 테스트 케이스 하나의 실행이 끝나면 매 번 rollback 처리를 해준다.
 @SpringBootTest
 @AutoConfigureMockMvc
-public class MemberControllerTest implements MemberControllerTestHelper {
+public class MemberControllerV2Test implements MemberControllerTestHelper {
     @Autowired
     private MockMvc mockMvc;
 
