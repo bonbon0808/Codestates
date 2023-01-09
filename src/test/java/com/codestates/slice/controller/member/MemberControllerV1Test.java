@@ -1,4 +1,4 @@
-package com.codestates.homework.slice;
+package com.codestates.slice.controller.member;
 
 import com.codestates.member.dto.MemberDto;
 import com.google.gson.Gson;
@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional     // 테스트 케이스 하나의 실행이 끝나면 매 번 rollback 처리를 해준다.
 @SpringBootTest
 @AutoConfigureMockMvc
-public class MemberControllerHomeworkV1Test {
+public class MemberControllerV1Test {
     @Autowired
     private MockMvc mockMvc;
 
@@ -52,8 +52,8 @@ public class MemberControllerHomeworkV1Test {
         ResultActions actions =
                 mockMvc.perform(
                             post(uri)
-                                    .contentType(MediaType.APPLICATION_JSON)   /** 중복 */
                                     .accept(MediaType.APPLICATION_JSON)   /** 중복 */
+                                    .contentType(MediaType.APPLICATION_JSON)   /** 중복 */
                                     .content(content)   /** 중복 */
                 );
         /** 중복 코드 끝 */
@@ -80,24 +80,19 @@ public class MemberControllerHomeworkV1Test {
                                 .contentType(MediaType.APPLICATION_JSON)  /** 중복 */
                                 .content(postContent)
                 );
-        long memberId;
+
         String location = postActions.andReturn().getResponse().getHeader("Location"); // "/v11/members/1"
-        memberId = Long.parseLong(location.substring(location.lastIndexOf("/") + 1));
         /** 중복 코드 끝 */
 
         // MemberController의 patchMember()를 테스트하기 위한 테스트 데이터를 생성 후, DB에 업데이트
-        MemberDto.Patch patch =
-                new MemberDto.Patch(1, null, "010-2222-2222", null);
+        MemberDto.Patch patch = new MemberDto.Patch(1, null, "010-2222-2222", null);
 
         String patchContent = gson.toJson(patch);
-
-        /** 중복 */
-        URI patchUri = UriComponentsBuilder.newInstance().path("/v11/members/{member-id}").buildAndExpand(memberId).toUri();
 
         // when
         ResultActions actions =
                 mockMvc.perform(
-                        patch(patchUri)
+                        patch(location)
                         .accept(MediaType.APPLICATION_JSON)      /** 중복 */
                         .contentType(MediaType.APPLICATION_JSON) /** 중복 */
                         .content(patchContent)   /** 중복 */
@@ -123,17 +118,13 @@ public class MemberControllerHomeworkV1Test {
                                 .contentType(MediaType.APPLICATION_JSON)  /** 중복 */
                                 .content(postContent)     /** 중복 */
                 );
-        long memberId;
         String location = postActions.andReturn().getResponse().getHeader("Location"); // "/v11/members/1"
-        memberId = Long.parseLong(location.substring(location.lastIndexOf("/") + 1));
         /** 중복 코드 끝 */
 
-        /** 중복 */
-        URI getUri = UriComponentsBuilder.newInstance().path("/v11/members/{member-id}").buildAndExpand(memberId).toUri();
 
         // when / then
         mockMvc.perform(
-                    get(getUri)
+                    get(location)
                             .accept(MediaType.APPLICATION_JSON)   /** 중복 */
                 )
                 .andExpect(status().isOk())
@@ -213,16 +204,12 @@ public class MemberControllerHomeworkV1Test {
                                 .contentType(MediaType.APPLICATION_JSON)  /** 중복 */
                                 .content(postContent)
                 );
-        long memberId;
+
         String location = postActions.andReturn().getResponse().getHeader("Location"); // "/v11/members/1"
-        memberId = Long.parseLong(location.substring(location.lastIndexOf("/") + 1));
         /** 중복 코드 끝 */
 
-        /** 중복 */
-        URI uri = UriComponentsBuilder.newInstance().path("/v11/members/{member-id}").buildAndExpand(memberId).toUri();
-
         // when / then
-        mockMvc.perform(delete(uri))
+        mockMvc.perform(delete(location))
                 .andExpect(status().isNoContent());
     }
 }

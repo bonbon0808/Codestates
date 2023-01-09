@@ -1,4 +1,4 @@
-package com.codestates.homework.mock;
+package com.codestates.homework;
 
 import com.codestates.exception.BusinessLogicException;
 import com.codestates.helper.StubData;
