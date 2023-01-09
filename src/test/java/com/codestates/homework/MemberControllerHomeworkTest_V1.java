@@ -144,9 +144,7 @@ public class MemberControllerHomeworkTest_V1 {
         // given
         long memberId = 1L;
         Member member = new Member("hgd@gmail.com", "홍길동", "010-1111-1111");
-        member.setMemberId(memberId);
         member.setMemberStatus(Member.MemberStatus.MEMBER_ACTIVE);
-        member.setStamp(new Stamp());
 
         MemberDto.Response response = new MemberDto.Response(1L,
                                                             "hgd@gmail.com",
@@ -156,10 +154,8 @@ public class MemberControllerHomeworkTest_V1 {
                                                             new Stamp());
 
         // Stubbing by Mockito
-        given(memberService.findMember(Mockito.anyLong()))
-                .willReturn(new Member());
-        given(mapper.memberToMemberResponse(Mockito.any(Member.class)))
-                .willReturn(response);
+        given(memberService.findMember(Mockito.anyLong())).willReturn(new Member());
+        given(mapper.memberToMemberResponse(Mockito.any(Member.class))).willReturn(response);
 
         URI uri = UriComponentsBuilder.newInstance().path("/v11/members/{memberId}").buildAndExpand(memberId).toUri();
 
