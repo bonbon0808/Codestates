@@ -26,8 +26,8 @@ public class FetchStrategyConfig {
         System.out.println("# Active Profile: many-to-one-bi");
 
         return args -> {
-//            oneToManyFetchLazyTest();   // @oneToMany 일 경우 지연 로딩 테스트
-            oneToManyFetchLazyJPQLTest(); // JPQL에 해당되는 엔티티만 조회.
+            oneToManyFetchLazyTest();   // @oneToMany 일 경우 지연 로딩 테스트
+//            oneToManyFetchLazyJPQLTest(); // JPQL에 해당되는 엔티티만 조회.
         };
     }
 
