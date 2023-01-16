@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.Optional;
 
-@Component
+//@Component
 public class HelloUserAuthenticationProvider implements AuthenticationProvider {
     private final HelloUserDetailsServiceV3 userDetailsService;
     private final PasswordEncoder passwordEncoder;
