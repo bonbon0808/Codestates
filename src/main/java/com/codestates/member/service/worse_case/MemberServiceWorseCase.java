@@ -14,7 +14,7 @@ public class MemberServiceWorseCase {
     // Better case
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
-        return member; // 실제로는 DB에 회원 정보를 저장합니다.
+        return member; // 실제로는 DB에 회원 정보를 저장한 후, 리턴합니다.
     }
 
     // Worse case
@@ -22,7 +22,7 @@ public class MemberServiceWorseCase {
         if (existsMember(member.getEmail())) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
         }
-        return member; // 실제로는 DB에 회원 정보를 저장합니다.
+        return member; // 실제로는 DB에 회원 정보를 저장한 후, 리턴합니다.
     }
 
     public boolean existsMember(String email) {
