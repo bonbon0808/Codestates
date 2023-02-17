@@ -23,9 +23,7 @@ import java.util.stream.Collectors;
 
 
 /**
- * - DI 적용
- * - Mapstruct Mapper 적용
- * - @ExceptionHandler 적용
+ * - @ExceptionHandler를 ErrorResponse와 함께 적용
  */
 @RestController
 @RequestMapping("/v7/members")

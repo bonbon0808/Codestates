@@ -8,7 +8,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.validation.ConstraintViolationException;
 
-// ConstraintViolationException 처리 추가. ErrorResponse.of() 사용
+/**
+ * MethodArgumentNotValidException 처리
+ *  - ErrorResponse.of(e.getBindingResult())를 이용해서 에러에 대한 구체적인 정보를 ErrorResponse가 만든다.
+ * ConstraintViolationException 처리
+ *  - ErrorResponse.of(e.getConstraintViolations())를 이용해서 에러에 대한 구체적인 정보를 ErrorResponse가 만든다.
+ */
 //@RestControllerAdvice
 public class GlobalExceptionAdviceV2 {
     @ExceptionHandler

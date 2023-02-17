@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolationException;
 
-// BusinessLogicException 정의. 상태 코드만 넘김 -> ControllerV10
-@RestControllerAdvice
+/**
+ * BusinessLogicException 정의.
+ *  - HTTP Status 코드만 넘김 -> ControllerV10
+ *  - Status가 고정되어 있지 않은 경우에는 ResponseEntity를 사용. 고정되어 있으면 @ResponseStatus를 사용
+ */
+//@RestControllerAdvice
 @Slf4j
 public class GlobalExceptionAdviceV5 {
     @ExceptionHandler
@@ -38,7 +42,6 @@ public class GlobalExceptionAdviceV5 {
     public ResponseEntity handleBusinessLogicException(BusinessLogicException e) {
         System.out.println(e.getExceptionCode().getStatus());
         System.out.println(e.getMessage());
-        return new ResponseEntity<>(HttpStatus.valueOf(e.getExceptionCode()
-                .getStatus()));
+        return new ResponseEntity<>(HttpStatus.valueOf(e.getExceptionCode().getStatus()));
     }
 }

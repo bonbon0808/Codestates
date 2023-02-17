@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolationException;
 
-// 비즈니스 로직 예외 처리(RuntimeException) 정의만. 미처리
+/**
+ * 비즈니스 로직 예외 처리(RuntimeException) 정의만.
+ *  - 현재는 미처리
+ *  - RuntimeException은 가장 큰 범위인데 HttpStatus.NOT_FOUND로 고정하는 나쁜 케이스
+ */
 //@RestControllerAdvice
 public class GlobalExceptionAdviceV3 {
     @ExceptionHandler

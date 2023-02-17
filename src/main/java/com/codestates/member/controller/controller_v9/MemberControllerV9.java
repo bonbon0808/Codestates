@@ -18,8 +18,6 @@ import java.util.List;
 
 
 /**
- * - DI 적용
- * - Mapstruct Mapper 적용
  * - GlobalExceptionAdvice에서 예외 처리
  */
 @RestController

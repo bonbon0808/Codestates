@@ -17,8 +17,7 @@ import java.util.List;
 
 
 /**
- * - DI 적용
- * - Mapstruct Mapper 적용
+ * - Exception을 구체적으로 처리 하지 않는 경우
  */
 @RestController
 @RequestMapping("/v5/members")

@@ -12,7 +12,11 @@ import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// ConstraintViolationException 미처리
+/**
+ * MethodArgumentNotValidException 처리
+ *  - ErrorResponse를 만드는 로직이 포함되어 있다.
+ * ConstraintViolationException 미처리
+ */
 //@RestControllerAdvice
 public class GlobalExceptionAdviceV1 {
     @ExceptionHandler

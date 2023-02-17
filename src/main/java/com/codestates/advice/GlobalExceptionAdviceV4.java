@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.validation.ConstraintViolationException;
 
-// BusinessLogicException 정의. 미처리
+/**
+ * BusinessLogicException 정의.
+ *  - 처리는 실습 과제로 대체
+ */
 //@RestControllerAdvice
 public class GlobalExceptionAdviceV4 {
     @ExceptionHandler
@@ -31,7 +34,6 @@ public class GlobalExceptionAdviceV4 {
     }
 
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleBusinessLogicException(BusinessLogicException e) {
         System.out.println(e.getExceptionCode().getStatus());
         System.out.println(e.getMessage());
