@@ -2,7 +2,7 @@ package com.codestates.advice;
 
 import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
-import com.codestates.response.ErrorResponse;
+import com.codestates.response.ErrorResponseV1;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,27 +27,27 @@ import javax.validation.ConstraintViolationException;
  * </ul>
  * @see <a href="https://github.com/codestates-seb/be-solution-exception/blob/94ae2dc4e0ed2ceba9ce304d227a532902251208/src/main/java/com/codestates/exception/BusinessLogicException.java" target="_blank">BusinessLogicException</a>
  * @see <a href="https://github.com/codestates-seb/be-solution-exception/blob/94ae2dc4e0ed2ceba9ce304d227a532902251208/src/main/java/com/codestates/exception/ExceptionCode.java" target="_blank">ExceptionCode</a>
- * @see com.codestates.response.ErrorResponse
+ * @see ErrorResponseV1
  * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ResponseStatus.html" target="_blank">@ResponseStatus</a>
  * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html" target="_blank">@ResponseStatus</a>
  */
 @Slf4j
-@RestControllerAdvice
-public class GlobalExceptionAdvice {
+//@RestControllerAdvice
+public class GlobalExceptionAdviceV1 {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleMethodArgumentNotValidException(
+    public ErrorResponseV1 handleMethodArgumentNotValidException(
             MethodArgumentNotValidException e) {
-        final ErrorResponse response = ErrorResponse.of(e.getBindingResult());
+        final ErrorResponseV1 response = ErrorResponseV1.of(e.getBindingResult());
 
         return response;
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleConstraintViolationException(
+    public ErrorResponseV1 handleConstraintViolationException(
             ConstraintViolationException e) {
-        final ErrorResponse response = ErrorResponse.of(e.getConstraintViolations());
+        final ErrorResponseV1 response = ErrorResponseV1.of(e.getConstraintViolations());
 
         return response;
     }
@@ -71,10 +71,10 @@ public class GlobalExceptionAdvice {
      * </pre>
      * <ul>
      *     <li>
-     *         JSON 포맷의 response body는 Java에서 객체의 필드와 1대1로 매핑이 됩니다. 따라서 {@link com.codestates.response.ErrorResponse} 클래스에
+     *         JSON 포맷의 response body는 Java에서 객체의 필드와 1대1로 매핑이 됩니다. 따라서 {@link ErrorResponseV1} 클래스에
      *         status 필드와 message 필드가 없다면 status 필드와 message 필드를 ErrorResponse에 추가하면 됩니다.
      *         필드를 추가할 경우에는 JSON 프로퍼티에서 표현하는 데이터 타입과 객체의 필드 타입을 적절하게 맞춰 주어야 합니다.
-     *         따라서 ErrorResponse에서 status 필드와 messgage 필드를 추가할 수 있도록 {@link com.codestates.response.ErrorResponse#of(ExceptionCode)}를 추가합니다.
+     *         따라서 ErrorResponse에서 status 필드와 messgage 필드를 추가할 수 있도록 {@link ErrorResponseV1#of(ExceptionCode)}를 추가합니다.
      *     </li>
      *     <li>
      *         ErrorResponse의 status와 message 필드의 값은
@@ -103,10 +103,9 @@ public class GlobalExceptionAdvice {
      */
     @ExceptionHandler
     public ResponseEntity handleBusinessLogicException(BusinessLogicException e) {
-        final ErrorResponse response = ErrorResponse.of(e.getExceptionCode());
+        final ErrorResponseV1 response = ErrorResponseV1.of(e.getExceptionCode());
 
-        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode()
-                .getStatus()));
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode().getStatus()));
     }
 
 
@@ -131,12 +130,12 @@ public class GlobalExceptionAdvice {
      * </pre>
      * <ul>
      *     <li>
-     *         첫 번째 실습 과제를 통해 {@link com.codestates.response.ErrorResponse#of(ExceptionCode)}를 추가했지만
-     *         {@link com.codestates.response.ErrorResponse#of(ExceptionCode)}를 통해 두 번째 실습 과제의 요구 사항을 만족시킬 수 없습니다.
+     *         첫 번째 실습 과제를 통해 {@link ErrorResponseV1#of(ExceptionCode)}를 추가했지만
+     *         {@link ErrorResponseV1#of(ExceptionCode)}를 통해 두 번째 실습 과제의 요구 사항을 만족시킬 수 없습니다.
      *         따라서
      *         <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/HttpStatus.html" target="_blank">
      *            HttpStatus
-     *         </a> 를 통해 status와 message 필드의 값을 얻을 수 있는 {@link com.codestates.response.ErrorResponse#of(HttpStatus)}를 추가합니다.
+     *         </a> 를 통해 status와 message 필드의 값을 얻을 수 있는 {@link ErrorResponseV1#of(HttpStatus)}를 추가합니다.
      *     </li>
      *     <li>
      *         {@link #handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException)}는
@@ -156,10 +155,10 @@ public class GlobalExceptionAdvice {
      */
     @ExceptionHandler
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public ErrorResponse handleHttpRequestMethodNotSupportedException(
+    public ErrorResponseV1 handleHttpRequestMethodNotSupportedException(
             HttpRequestMethodNotSupportedException e) {
 
-        final ErrorResponse response = ErrorResponse.of(HttpStatus.METHOD_NOT_ALLOWED);
+        final ErrorResponseV1 response = ErrorResponseV1.of(HttpStatus.METHOD_NOT_ALLOWED);
 
         return response;
     }
@@ -186,7 +185,7 @@ public class GlobalExceptionAdvice {
      *         모두 처리하게 됩니다.
      *     </li>
      *     <li>
-     *         {@link com.codestates.response.ErrorResponse#of(HttpStatus)}를 이미 두 번째 과제에서 구현했기 때문에
+     *         {@link ErrorResponseV1#of(HttpStatus)}를 이미 두 번째 과제에서 구현했기 때문에
      *         적절한 Http Status만 파라미터로 제공하면 됩니다.
      *     </li>
      *     <li>
@@ -209,12 +208,12 @@ public class GlobalExceptionAdvice {
      */
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleException(Exception e) {
+    public ErrorResponseV1 handleException(Exception e) {
         log.error("# handle Exception", e);
         // TODO 애플리케이션의 에러는 에러 로그를 로그에 기록하고, 관리자에게 이메일이나 카카오 톡,
         //  슬랙 등으로 알려주는 로직이 있는게 좋습니다.
 
-        final ErrorResponse response = ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR);
+        final ErrorResponseV1 response = ErrorResponseV1.of(HttpStatus.INTERNAL_SERVER_ERROR);
 
         return response;
     }

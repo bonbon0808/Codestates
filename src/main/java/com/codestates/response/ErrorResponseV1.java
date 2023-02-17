@@ -1,6 +1,7 @@
 package com.codestates.response;
 
 import com.codestates.exception.ExceptionCode;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -20,14 +21,15 @@ import java.util.stream.Collectors;
  *     <li>private ErrorResponse(int status, String message)</li>
  *     <li>{@link #of(ExceptionCode)}</li>
  *     <li>{@link #of(HttpStatus)}</li>
+ *     <li>{@link #of(int, String)}</li>
  * </ul>
  */
 @Getter
-public class ErrorResponse {
+public class ErrorResponseV1 {
     /**
      * Http Status
      */
-    private int status;
+    private Integer status;
     /**
      * 에러 메시지
      */
@@ -41,23 +43,23 @@ public class ErrorResponse {
      * @param status    Http Status
      * @param message   에러 메시지
      */
-    private ErrorResponse(int status, String message) {
+    private ErrorResponseV1(int status, String message) {
         this.status = status;
         this.message = message;
     }
 
-    private ErrorResponse(List<FieldError> fieldErrors,
-                          List<ConstraintViolationError> violationErrors) {
+    private ErrorResponseV1(List<FieldError> fieldErrors,
+                            List<ConstraintViolationError> violationErrors) {
         this.fieldErrors = fieldErrors;
         this.violationErrors = violationErrors;
     }
 
-    public static ErrorResponse of(BindingResult bindingResult) {
-        return new ErrorResponse(FieldError.of(bindingResult), null);
+    public static ErrorResponseV1 of(BindingResult bindingResult) {
+        return new ErrorResponseV1(FieldError.of(bindingResult), null);
     }
 
-    public static ErrorResponse of(Set<ConstraintViolation<?>> violations) {
-        return new ErrorResponse(null, ConstraintViolationError.of(violations));
+    public static ErrorResponseV1 of(Set<ConstraintViolation<?>> violations) {
+        return new ErrorResponseV1(null, ConstraintViolationError.of(violations));
     }
 
     /**
@@ -66,8 +68,8 @@ public class ErrorResponse {
      * @param exceptionCode 발생한 예외의 {@link com.codestates.exception.ExceptionCode} 정보
      * @return  ErrorResponse 객체
      */
-    public static ErrorResponse of(ExceptionCode exceptionCode) {
-        return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage());
+    public static ErrorResponseV1 of(ExceptionCode exceptionCode) {
+        return new ErrorResponseV1(exceptionCode.getStatus(), exceptionCode.getMessage());
     }
 
     /**
@@ -77,8 +79,19 @@ public class ErrorResponse {
      * @param httpStatus 발생한 예외의 Http Status 정보
      * @return  ErrorResponse 객체
      */
-    public static ErrorResponse of(HttpStatus httpStatus) {
-        return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase());
+    public static ErrorResponseV1 of(HttpStatus httpStatus) {
+        return new ErrorResponseV1(httpStatus.value(), httpStatus.getReasonPhrase());
+    }
+
+    /**
+     * Http Status와 에러 메시지를 파라미터로 전달 받아 ErrorResponse의 status와 message 필드를 초기화 해줍니다.
+     *
+     * @param status    Http Status
+     * @param message   에러 메시지
+     * @return
+     */
+    public static ErrorResponseV1 of(int status, String message) {
+        return new ErrorResponseV1(status, message);
     }
 
     @Getter
