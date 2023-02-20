@@ -24,8 +24,7 @@ public class MessageController {
     public ResponseEntity postMessages(
             @Valid @RequestBody MessagePostDto messagePostDto) {
         // 사용자의 요청을 받아들입니다.
-        Message message =
-                messageService.createMessage(mapper.messageDtoToMessage(messagePostDto));
+        Message message = messageService.createMessage(mapper.messageDtoToMessage(messagePostDto));
 
         return ResponseEntity.ok(mapper.messageToMessageResponseDto(message));
     }
