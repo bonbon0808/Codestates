@@ -48,7 +48,7 @@ public interface OrderMapper {
         long memberId = order.getMemberId().getId();
 
         List<OrderCoffeeResponseDto> orderCoffees =
-                orderToOrderCoffeeResponseDto(coffeeService, order.getOrderCoffees());
+                orderCoffeesToOrderCoffeeResponseDtos(coffeeService, order.getOrderCoffees());
 
         OrderResponseDto orderResponseDto = new OrderResponseDto();
         orderResponseDto.setOrderCoffees(orderCoffees);
@@ -79,8 +79,8 @@ public interface OrderMapper {
 //    }
 
     // N + 1 이슈가 어느 정도는 개선된 orderToOrderCoffeeResponseDtoV2 버전
-    default List<OrderCoffeeResponseDto> orderToOrderCoffeeResponseDto(CoffeeService coffeeService,
-                                                                         Set<CoffeeRef> orderCoffees) {
+    default List<OrderCoffeeResponseDto> orderCoffeesToOrderCoffeeResponseDtos(CoffeeService coffeeService,
+                                                                               Set<CoffeeRef> orderCoffees) {
         // 주문한 커피의 coffeeId만 수집
         List<Long> coffeeIds =
                 orderCoffees.stream()
