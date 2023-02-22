@@ -79,7 +79,7 @@ public interface OrderMapper {
     }
 
     // N + 1 이슈가 어느 정도는 개선된 orderToOrderCoffeeResponseDtoV2 버전
-//    default List<OrderCoffeeResponseDto> orderCoffeesToOrderCoffeeResponseDtos(CoffeeService coffeeService,
+//    default List<OrderCoffeeResponseDto> orderCoffeesToOrderCoffeeResponseDtosV2(CoffeeService coffeeService,
 //                                                                               Set<CoffeeRef> orderCoffees) {
 //        // 주문한 커피의 coffeeId만 수집
 //        List<Long> coffeeIds =
