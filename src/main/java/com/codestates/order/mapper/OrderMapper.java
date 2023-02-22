@@ -62,48 +62,47 @@ public interface OrderMapper {
         return orderResponseDto;
     }
 
-//    default List<OrderCoffeeResponseDto> orderToOrderCoffeeResponseDto(
-//                                                        CoffeeService coffeeService,
-//                                                        Set<CoffeeRef> orderCoffees) {
-//        return orderCoffees.stream()
-//                .map(coffeeRef -> {
-//                    Coffee coffee = coffeeService.findCoffee(coffeeRef.getCoffeeId()); // N + 1 이슈 발생
-//
-//                    return new OrderCoffeeResponseDto(coffee.getCoffeeId(),
-//                            coffee.getKorName(),
-//                            coffee.getEngName(),
-//                            coffee.getPrice(),
-////                            coffee.getPrice().getValue(), // Money 타입을 사용할 경우
-//                            coffeeRef.getQuantity());
-//                }).collect(Collectors.toList());
-//    }
+    default List<OrderCoffeeResponseDto> orderCoffeesToOrderCoffeeResponseDtos(
+                                                        CoffeeService coffeeService,
+                                                        Set<CoffeeRef> orderCoffees) {
+        return orderCoffees.stream()
+                .map(coffeeRef -> {
+                    Coffee coffee = coffeeService.findCoffee(coffeeRef.getCoffeeId()); // N + 1 이슈 발생
+
+                    return new OrderCoffeeResponseDto(coffee.getCoffeeId(),
+                            coffee.getKorName(),
+                            coffee.getEngName(),
+                            coffee.getPrice(),
+//                            coffee.getPrice().getValue(), // Money 타입을 사용할 경우
+                            coffeeRef.getQuantity());
+                }).collect(Collectors.toList());
+    }
 
     // N + 1 이슈가 어느 정도는 개선된 orderToOrderCoffeeResponseDtoV2 버전
-    default List<OrderCoffeeResponseDto> orderCoffeesToOrderCoffeeResponseDtos(CoffeeService coffeeService,
-                                                                               Set<CoffeeRef> orderCoffees) {
-        // 주문한 커피의 coffeeId만 수집
-        List<Long> coffeeIds =
-                orderCoffees.stream()
-                        .map(coffeeRef -> coffeeRef.getCoffeeId())
-                        .collect(Collectors.toList());
-
-        // 한번의 쿼리로 주문한 커피 정보 조회
-        List<Coffee> coffees = coffeeService.findAllCoffeesByIds(coffeeIds);
-
-        // 조회된 커피(Coffee 엔티티)를 OrderCoffeeResponseDto로 변환
-        // coffeeId를 기준으로 정렬 후, Guava Streams를 이용해 zipping 한다.
-        return Streams
-                .zip(
-                        coffees.stream().sorted(comparing(Coffee::getCoffeeId)),
-                        orderCoffees.stream().sorted(comparing(CoffeeRef::getCoffeeId)),  // Quantity 정보를 얻기 위한 Set<CoffeeRef>
-                        (coffee, coffeeRef) -> new OrderCoffeeResponseDto(coffee.getCoffeeId(),
-                                coffee.getKorName(),
-                                coffee.getEngName(),
-                                coffee.getPrice(),
-//                            coffee.getPrice().getValue(), // Money 타입을 사용할 경우
-                                coffeeRef.getQuantity()))
-                .collect(Collectors.toList());
-    }
+//    default List<OrderCoffeeResponseDto> orderCoffeesToOrderCoffeeResponseDtos(CoffeeService coffeeService,
+//                                                                               Set<CoffeeRef> orderCoffees) {
+//        // 주문한 커피의 coffeeId만 수집
+//        List<Long> coffeeIds =
+//                orderCoffees.stream()
+//                        .map(coffeeRef -> coffeeRef.getCoffeeId())
+//                        .collect(Collectors.toList());
+//
+//        // 한번의 쿼리로 주문한 커피 정보 조회
+//        List<Coffee> coffees = coffeeService.findAllCoffeesByIds(coffeeIds);
+//
+//        // 조회된 커피(Coffee 엔티티)를 OrderCoffeeResponseDto로 변환
+//        // coffeeId를 기준으로 정렬 후, Guava Streams를 이용해 zipping 한다.
+//        return Streams
+//                .zip(
+//                        coffees.stream().sorted(comparing(Coffee::getCoffeeId)),
+//                        orderCoffees.stream().sorted(comparing(CoffeeRef::getCoffeeId)),  // Quantity 정보를 얻기 위한 Set<CoffeeRef>
+//                        (coffee, coffeeRef) -> new OrderCoffeeResponseDto(coffee.getCoffeeId(),
+//                                coffee.getKorName(),
+//                                coffee.getEngName(),
+//                                coffee.getPrice(),
+//                                coffeeRef.getQuantity()))
+//                .collect(Collectors.toList());
+//    }
 
     // N + 1 이슈가 없는 네이티브 쿼리를 이용해 읽기 전용 엔티티 클래스에서 주문한 커피 정보를 매핑하는 버전
     default List<OrderResponseDto> readableOrderCoffeeToOrderResponseDto(List<ReadableOrderCoffee> orders) {
