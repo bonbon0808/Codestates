@@ -2,7 +2,8 @@ package com.codestates.coffee.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
+
+import javax.persistence.Id;
 
 @Getter
 @Setter
