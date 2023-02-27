@@ -119,6 +119,26 @@ public interface OrderMapper {
     @Mapping(source = "member.memberId", target = "memberId")
     OrderResponseDto orderToOrderResponseDto(Order order);
 
+    // 주문한 커피 정보를 수동으로 직접 매핑하는 예
+    /**
+     default OrderResponseDto orderToOrderResponseDto(Order order){
+     // 객체 그래프 탐색을 통해 주문한 커피 정보를 가져온다.
+     // N + 1 문제가 발생할 수 있다.
+     List<OrderCoffee> orderCoffees = order.getOrderCoffees();
+
+     OrderResponseDto orderResponseDto = new OrderResponseDto();
+     orderResponseDto.setOrderId(order.getOrderId());
+     orderResponseDto.setMemberId(order.getMember().getMemberId());
+     orderResponseDto.setOrderStatus(order.getOrderStatus());
+     orderResponseDto.setCreatedAt(order.getCreatedAt());
+
+     // 주문한 커피 정보를 List<OrderCoffeeResponseDto>로 변경한다.
+     orderResponseDto.setOrderCoffees(orderCoffeesToOrderCoffeeResponseDtos(orderCoffees));
+
+     return orderResponseDto;
+     }
+     */
+
 
     /**
      * OrderCoffee 엔티티 객체를 response body로 전달하기 위해 OrderCoffeeResponseDto로 변환하는 Solution 코드입니다.
@@ -166,52 +186,32 @@ public interface OrderMapper {
     OrderCoffeeResponseDto orderCoffeeToOrderCoffeeResponseDto(OrderCoffee orderCoffee);
 
 
-    // 주문한 커피 정보를 수동으로 직접 매핑하는 예
-    /**
-    default OrderResponseDto orderToOrderResponseDto(Order order){
-        // 객체 그래프 탐색을 통해 주문한 커피 정보를 가져온다.
-        // N + 1 문제가 발생할 수 있다.
-        List<OrderCoffee> orderCoffees = order.getOrderCoffees();
-
-        OrderResponseDto orderResponseDto = new OrderResponseDto();
-        orderResponseDto.setOrderId(order.getOrderId());
-        orderResponseDto.setMemberId(order.getMember().getMemberId());
-        orderResponseDto.setOrderStatus(order.getOrderStatus());
-        orderResponseDto.setCreatedAt(order.getCreatedAt());
-
-        // 주문한 커피 정보를 List<OrderCoffeeResponseDto>로 변경한다.
-        orderResponseDto.setOrderCoffees(orderCoffeesToOrderCoffeeResponseDtos(orderCoffees));
-
-        return orderResponseDto;
-    }
-    */
-
-    // 수동으로 직접 매핑: 전체 수동 매핑
-
-    default List<OrderCoffeeResponseDto> orderCoffeesToOrderCoffeeResponseDtos(
-                                                List<OrderCoffee> orderCoffees) {
-    return orderCoffees
-            .stream()
-            .map(orderCoffee -> {
-                // 주문 등록 시에는 price 값이 null이므로, null 여부를 체크해야 한다.
-                // TODO 주문 등록을 URI만 던져주는 방식으로 바꾸면 이 코드는 필요없어진다.
-                Money coffeePrice = orderCoffee.getCoffee().getPrice();
-                Integer price = coffeePrice != null ? coffeePrice.getValue() : null;
-
-                return OrderCoffeeResponseDto
-                        .builder()
-                        .coffeeId(orderCoffee.getCoffee().getCoffeeId())
-                        .quantity(orderCoffee.getQuantity())
-                        .price(price)
-                        .korName(orderCoffee.getCoffee().getKorName())
-                        .engName(orderCoffee.getCoffee().getEngName())
-                        .build();
-            })
-            .collect(Collectors.toList());
-    }
+    // 주문한 커피 목록 정보를 가져오기 위해 수동으로 직접 전체 매핑: 전체 수동 매핑
+//    default List<OrderCoffeeResponseDto> orderCoffeesToOrderCoffeeResponseDtos(
+//                                                List<OrderCoffee> orderCoffees) {
+//    return orderCoffees
+//            .stream()
+//            .map(orderCoffee -> {
+//                // 주문 등록 시에는 price 값이 null이므로, null 여부를 체크해야 한다.
+//                // TODO 주문 등록을 URI만 던져주는 방식으로 바꾸면 이 코드는 필요없어진다.
+//                Money coffeePrice = orderCoffee.getCoffee().getPrice();
+//                Integer price = coffeePrice != null ? coffeePrice.getValue() : null;
+//
+//                return OrderCoffeeResponseDto
+//                        .builder()
+//                        .coffeeId(orderCoffee.getCoffee().getCoffeeId())
+//                        .quantity(orderCoffee.getQuantity())
+//                        .price(price)
+//                        .korName(orderCoffee.getCoffee().getKorName())
+//                        .engName(orderCoffee.getCoffee().getEngName())
+//                        .build();
+//            })
+//            .collect(Collectors.toList());
+//    }
 
 
-    // 수동으로 직접 매핑: orderCoffeeToOrderCoffeeResponseDto(orderCoffee) 이용
+    // 주문한 커피 목록 정보를 가져오기 위해 수동으로 직접 부분 매핑:
+    // 코드 내부에서 orderCoffeeToOrderCoffeeResponseDto(orderCoffee)를 이용하는 방법
     /**
     default List<OrderCoffeeResponseDto> orderCoffeesToOrderCoffeeResponseDtos(List<OrderCoffee> orderCoffees) {
         return orderCoffees

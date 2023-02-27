@@ -4,6 +4,7 @@ import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
 import com.codestates.member.entity.Member;
 import com.codestates.member.repository.MemberRepository;
+import com.codestates.stamp.Stamp;
 import com.codestates.utils.CustomBeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,10 +29,17 @@ public class MemberService {
     }
 
     public Member createMember(Member member) {
+        // 신규 회원에 대한 Stamp 제공
+        initStamp(member); // homework solution 추가
+
         // 이미 등록된 이메일인지 확인
         verifyExistsEmail(member.getEmail());
 
         return memberRepository.save(member);
+    }
+
+    private void initStamp(Member member) {
+        member.setStamp(new Stamp());
     }
 
     // 리팩토링 전
