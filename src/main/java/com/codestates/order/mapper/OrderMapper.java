@@ -192,16 +192,11 @@ public interface OrderMapper {
 //    return orderCoffees
 //            .stream()
 //            .map(orderCoffee -> {
-//                // 주문 등록 시에는 price 값이 null이므로, null 여부를 체크해야 한다.
-//                // TODO 주문 등록을 URI만 던져주는 방식으로 바꾸면 이 코드는 필요없어진다.
-//                Money coffeePrice = orderCoffee.getCoffee().getPrice();
-//                Integer price = coffeePrice != null ? coffeePrice.getValue() : null;
-//
 //                return OrderCoffeeResponseDto
 //                        .builder()
 //                        .coffeeId(orderCoffee.getCoffee().getCoffeeId())
 //                        .quantity(orderCoffee.getQuantity())
-//                        .price(price)
+//                        .price(orderCoffee.getCoffee().getPrice())
 //                        .korName(orderCoffee.getCoffee().getKorName())
 //                        .engName(orderCoffee.getCoffee().getEngName())
 //                        .build();
