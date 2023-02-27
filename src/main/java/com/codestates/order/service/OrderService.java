@@ -124,8 +124,7 @@ public class OrderService {
 
         // 커피가 존재하는지 확인
         order.getOrderCoffees().stream()
-                .forEach(orderCoffee -> coffeeService.
-                        findVerifiedCoffee(orderCoffee.getCoffee().getCoffeeId()));
+                .forEach(orderCoffee -> coffeeService.findVerifiedCoffee(orderCoffee.getCoffee().getCoffeeId()));
     }
 
     /**
