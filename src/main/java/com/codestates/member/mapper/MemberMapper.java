@@ -16,7 +16,7 @@ public interface MemberMapper {
     Member memberPatchDtoToMember(MemberDto.Patch requestBody);
 
     @Mapping(source = "stamp.stampCount", target = "stampCount")
-    @Mapping(source = "memberStatus.status", target = "memberStatus")
+    @Mapping(source = "memberStatus.status", target = "memberStatus")  // enum 전달이 좋은가, human readable한 값 전달이 좋은가?
     MemberDto.Response memberToMemberResponseDto(Member member);
     List<MemberDto.Response> membersToMemberResponseDtos(List<Member> members);
 }
