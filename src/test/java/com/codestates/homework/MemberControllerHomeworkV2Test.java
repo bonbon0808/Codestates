@@ -46,7 +46,7 @@ public class MemberControllerHomeworkV2Test implements MemberControllerTestHelpe
     @BeforeEach
     public void init() throws Exception {
         // given
-        this.post = (MemberDto.Post) StubData.MockMember.get(HttpMethod.POST);
+        this.post = (MemberDto.Post) StubData.MockMember.getRequestBody(HttpMethod.POST);
         String content = gson.toJson(post);
         URI uri = getURI();
         this.postResultActions = mockMvc.perform(postRequestBuilder(uri, content));
@@ -69,16 +69,15 @@ public class MemberControllerHomeworkV2Test implements MemberControllerTestHelpe
     @Test
     void patchMemberTest() throws Exception {
         // given
-        long memberId = getResponseMemberId();
+        String location = getResourceLocation();
 
         MemberDto.Patch patch =
-                (MemberDto.Patch) StubData.MockMember.get(HttpMethod.PATCH); // 별도의 Stub Data를 만들어서 재사용
+                (MemberDto.Patch) StubData.MockMember.getRequestBody(HttpMethod.PATCH); // 별도의 Stub Data를 만들어서 재사용
         String content = gson.toJson(patch);
-        URI uri = getURI(memberId);
 
         // when
         ResultActions actions =
-                mockMvc.perform(patchRequestBuilder(uri, content));
+                mockMvc.perform(patchRequestBuilder(location, content));
 
         // then
         actions.andExpect(status().isOk())
@@ -91,11 +90,10 @@ public class MemberControllerHomeworkV2Test implements MemberControllerTestHelpe
         // init() 에서..
 
         // when
-        long memberId = getResponseMemberId();
-        URI uri = getURI(memberId);
+        String location = getResourceLocation();
 
         // then
-        mockMvc.perform(getRequestBuilder(uri))
+        mockMvc.perform(getRequestBuilder(location))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.email").value(this.post.getEmail()))
                 .andExpect(jsonPath("$.data.name").value(this.post.getName()))
@@ -138,19 +136,16 @@ public class MemberControllerHomeworkV2Test implements MemberControllerTestHelpe
         // init() 에서 DB에 넣어준다.
 
         // when
-        long memberId = getResponseMemberId();
-        URI uri = getURI(memberId);
+        String location = getResourceLocation();
 
         // then
-        mockMvc.perform(deleteRequestBuilder(uri))
+        mockMvc.perform(deleteRequestBuilder(location))
                 .andExpect(status().isNoContent());
     }
 
-    private long getResponseMemberId() {
-        long memberId;
+    private String getResourceLocation() {
         String location = this.postResultActions.andReturn().getResponse().getHeader("Location"); // "/v11/members/1"
-        memberId = Long.parseLong(location.substring(location.lastIndexOf("/") + 1));
 
-        return memberId;
+        return location;
     }
 }
