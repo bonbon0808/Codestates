@@ -154,8 +154,10 @@ public class MemberControllerHomeworkTest_V1 {
                                                             new Stamp());
 
         // Stubbing by Mockito
-        given(memberService.findMember(Mockito.anyLong())).willReturn(new Member());
-        given(mapper.memberToMemberResponse(Mockito.any(Member.class))).willReturn(response);
+        given(memberService.findMember(Mockito.anyLong()))
+                .willReturn(new Member());
+        given(mapper.memberToMemberResponse(Mockito.any(Member.class)))
+                .willReturn(response);
 
         URI uri = UriComponentsBuilder.newInstance().path("/v11/members/{memberId}").buildAndExpand(memberId).toUri();
 
