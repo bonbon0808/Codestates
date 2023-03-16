@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 /**
  * - DI 적용
- * - Mapstruct Mapper 적용
+ * - Mapstruct Mapper 적용.
  */
 @RestController
 @RequestMapping("/v5/members")
