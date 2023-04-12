@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Section3Week1TemplateBusinessLayerApplication {
+public class Section3Week1TemplateServiceLayerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Section3Week1TemplateBusinessLayerApplication.class, args);
+		SpringApplication.run(Section3Week1TemplateServiceLayerApplication.class, args);
 	}
 
 }
