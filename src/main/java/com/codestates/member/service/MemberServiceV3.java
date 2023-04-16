@@ -11,6 +11,7 @@ import java.util.List;
  * V2
  *  - 메서드 구현
  *  - DI 적용
+ *  - BusinessLogicException을 이용한 예외 throw
  */
 @Service
 public class MemberServiceV3 {
