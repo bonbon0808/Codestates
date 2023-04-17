@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * V2
+ * V3
  *  - 메서드 구현
  *  - DI 적용
  *  - BusinessLogicException을 이용한 예외 throw
