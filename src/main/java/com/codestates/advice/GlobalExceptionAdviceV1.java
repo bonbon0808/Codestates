@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 /**
  * MethodArgumentNotValidException 처리
- *  - ErrorResponse를 만드는 로직이 포함되어 있다.
+ *  - ErrorResponse를 만드는 로직이 포함되어 있다. (생성자 방식)
  * ConstraintViolationException 미처리
  */
 //@RestControllerAdvice

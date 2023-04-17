@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * - GlobalExceptionAdvice에서 예외 처리
+ * - MemberServiceV2 이용
  */
 @RestController
 @RequestMapping("/v9/members")

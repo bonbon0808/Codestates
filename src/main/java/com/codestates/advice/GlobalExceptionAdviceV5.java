@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.validation.ConstraintViolationException;
 
 /**
- * BusinessLogicException 정의.
- *  - HTTP Status 코드만 넘김 -> ControllerV10
+ * BusinessLogicException을 통해 적절한 예외를 동적으로 처리할 수 있음.
+ *  - HTTP Status 코드만 넘기는 예시
+ *  - ErrorResponse를 넘기는 처리는 실습 과제로 대체
  *  - Status가 고정되어 있지 않은 경우에는 ResponseEntity를 사용. 고정되어 있으면 @ResponseStatus를 사용
  */
-@RestControllerAdvice
+//@RestControllerAdvice
 @Slf4j
 public class GlobalExceptionAdviceV5 {
     @ExceptionHandler
