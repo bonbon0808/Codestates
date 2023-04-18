@@ -25,7 +25,7 @@ public class MessageJdbcService {
 
             statement = connection.prepareStatement(sql);
             statement.setString(1, message.getMessage());
-            int key = statement.executeUpdate();
+            statement.executeUpdate();
             return new MessageJdbc(null, message.getMessage());
         } catch (SQLException e) {
             log.error("SQLException happened: ", e);
