@@ -20,7 +20,7 @@ public class CoffeeService {
     }
 
     public Coffee createCoffee(Coffee coffee) {
-        // 커피 코드를 대문자로 변경
+        // 커피 코드를 대문자로 변경.왜 변경할까? --> 사용자 편의성을 위해.
         String coffeeCode = coffee.getCoffeeCode().toUpperCase();
 
         // 이미 등록된 커피 코드인지 확인
@@ -93,8 +93,7 @@ public class CoffeeService {
     private Coffee findVerifiedCoffeeByQuery(long coffeeId) {
         Optional<Coffee> optionalCoffee = coffeeRepository.findByCoffee(coffeeId);
         Coffee findCoffee =
-                optionalCoffee.orElseThrow(() ->
-                        new BusinessLogicException(ExceptionCode.COFFEE_NOT_FOUND));
+                optionalCoffee.orElseThrow(() -> new BusinessLogicException(ExceptionCode.COFFEE_NOT_FOUND));
 
         return findCoffee;
     }

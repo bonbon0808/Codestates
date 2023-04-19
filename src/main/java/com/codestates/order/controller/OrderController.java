@@ -58,8 +58,7 @@ public class OrderController {
     @GetMapping("/{order-id}")
     public ResponseEntity getOrder(@PathVariable("order-id") @Positive long orderId) {
         Order order = orderService.findOrder(orderId);
-        return new ResponseEntity<>(mapper.orderToOrderResponseDto(coffeeService, order),
-                HttpStatus.OK);
+        return new ResponseEntity<>(mapper.orderToOrderResponseDto(coffeeService, order), HttpStatus.OK);
     }
 
     @GetMapping

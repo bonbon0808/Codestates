@@ -42,8 +42,7 @@ public interface OrderMapper {
 
 //    OrderResponseDto2 orderToOrderResponseDto(Order order);   // ResponseDto에서 더 많은 일을 하게 되는 케이스
 
-    default OrderResponseDto orderToOrderResponseDto(CoffeeService coffeeService,
-                                                     Order order) {
+    default OrderResponseDto orderToOrderResponseDto(CoffeeService coffeeService, Order order) {
 
         long memberId = order.getMemberId().getId();
 

@@ -56,7 +56,7 @@ public class OrderService {
         Order findOrder = findVerifiedOrder(orderId);
         int step = findOrder.getOrderStatus().getStepNumber();
 
-        // OrderStatus의 step이 2 미만일 경우(ORDER_CONFIRM)에만 주문 취소가 되도록한다.
+        // OrderStatus의 step이 2 미만일 경우(ORDER_CONFIRM)에만 주문 취소가 되도록한다(일종의 도메인 규칙).
         if (step >= 2) {
             throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_ORDER);
         }
