@@ -95,7 +95,7 @@ public class MemberService {
      * @return  페이지네이션 정보와 List&lt;Member&gt;가 포함된 Page&lt;Member&gt;
      */
     public Page<Member> findMembers(int page, int size) {
-        return memberRepository.findAll(PageRequest.of(page, size, Sort.by("memberId").descending()));
+        return memberRepository.findAll(PageRequest.of(page - 1, size, Sort.by("memberId").descending()));
     }
 
     public void deleteMember(long memberId) {
