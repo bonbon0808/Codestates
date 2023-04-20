@@ -50,6 +50,9 @@ public interface OrderMapper {
         List<OrderCoffeeResponseDto> orderCoffees =
                 orderCoffeesToOrderCoffeeResponseDtos(coffeeService, order.getOrderCoffees());
 
+//        List<OrderCoffeeResponseDto> orderCoffees =
+//                orderCoffeesToOrderCoffeeResponseDtosV2(coffeeService, order.getOrderCoffees());
+
         OrderResponseDto orderResponseDto = new OrderResponseDto();
         orderResponseDto.setOrderCoffees(orderCoffees);
         orderResponseDto.setMemberId(memberId);
