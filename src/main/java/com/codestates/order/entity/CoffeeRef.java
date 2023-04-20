@@ -12,7 +12,7 @@ public class CoffeeRef {
     @Id
     private long orderCoffeeId;
 
-    // 왜 AggregateRef로 감싸지 않는가?
+    // 왜 AggregateReference로 감싸지 않는가?
     // --> Coffee와 CoffeeRef는 애그리거트 루트 간의 관계가 아니다.
     // --> CoffeeRef 자체가 coffeeId를 감싼 참조 객체의 역할을 한다.
     private long coffeeId;
