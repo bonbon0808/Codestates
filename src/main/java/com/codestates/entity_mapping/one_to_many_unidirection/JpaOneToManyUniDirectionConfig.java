@@ -28,8 +28,7 @@ public class JpaOneToManyUniDirectionConfig {
 
     private void mappingOneToManyUniDirection() {
         tx.begin();
-        Member member = new Member("hgd@gmail.com", "Hong Gil Dong",
-                "010-1111-1111");
+        Member member = new Member("hgd@gmail.com", "Hong Gil Dong", "010-1111-1111");
         Order order1 = new Order();
         Order order2 = new Order();
 
