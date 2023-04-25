@@ -32,7 +32,9 @@ import java.util.stream.Collectors;
  */
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
-    // 자동 매핑을 할 경우, Order가 OrderCoffee와 연관 관계 매핑을 할 방법이 없으므로 수동 매핑으로 해줘야 됨
+//    Order orderPostDtoToOrder(OrderPostDto orderPostDto);
+    // 자동 매핑을 할 경우, Order가 OrderCoffee와 연관 관계 매핑 할 때,
+    // coffeeId를 정상적으로 채워주지 않기 때문에 매핑 방법이 오히려 더 복잡해지므로 수동 매핑을 해주는게 낫다.
     default Order orderPostDtoToOrder(OrderPostDto orderPostDto) {
         Order order = new Order();
         Member member = new Member();
