@@ -10,8 +10,8 @@ public interface CoffeeRepository extends JpaRepository<Coffee, Long> { // 수�
     Optional<Coffee> findByCoffeeCode(String coffeeCode);
 
     // 수정된 부분
-//    @Query(value = "FROM Coffee c WHERE c.coffeeId = :coffeeId")
-//    @Query(value = "SELECT * FROM COFFEE WHERE coffee_Id = :coffeeId", nativeQuery =true)
-    @Query(value = "SELECT c FROM Coffee c WHERE c.coffeeId = :coffeeId")
+//    @Query(value = "SELECT * FROM COFFEE WHERE coffee_Id = :coffeeId", nativeQuery =true)  // 네티이티브 쿼리
+    //    @Query(value = "FROM Coffee c WHERE c.coffeeId = :coffeeId")  // JPQL
+    @Query(value = "SELECT c FROM Coffee c WHERE c.coffeeId = :coffeeId")  // JPQL
     Optional<Coffee> findByCoffee(long coffeeId);
 }
