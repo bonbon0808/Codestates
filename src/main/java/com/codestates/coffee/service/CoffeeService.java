@@ -5,6 +5,7 @@ import com.codestates.coffee.repository.CoffeeRepository;
 import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
 import com.codestates.order.entity.Order;
+import com.codestates.utils.CustomBeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 @Service
 public class CoffeeService {
     private final CoffeeRepository coffeeRepository;
+    private final CustomBeanUtils<Coffee> beanUtils;
 
-    public CoffeeService(CoffeeRepository coffeeRepository) {
+    public CoffeeService(CoffeeRepository coffeeRepository, CustomBeanUtils<Coffee> beanUtils) {
         this.coffeeRepository = coffeeRepository;
+        this.beanUtils = beanUtils;
     }
 
     public Coffee createCoffee(Coffee coffee) {
@@ -34,14 +37,16 @@ public class CoffeeService {
         // 조회하려는 커피가 검증된 커피인지 확인(존재하는 커피인지 확인 등)
         Coffee findCoffee = findVerifiedCoffee(coffee.getCoffeeId());
 
-        Optional.ofNullable(coffee.getKorName())
-                .ifPresent(korName -> findCoffee.setKorName(korName));
-        Optional.ofNullable(coffee.getEngName())
-                .ifPresent(engName -> findCoffee.setEngName(engName));
-        Optional.ofNullable(coffee.getPrice())
-                .ifPresent(price -> findCoffee.setPrice(price));
+//        Optional.ofNullable(coffee.getKorName())
+//                .ifPresent(korName -> findCoffee.setKorName(korName));
+//        Optional.ofNullable(coffee.getEngName())
+//                .ifPresent(engName -> findCoffee.setEngName(engName));
+//        Optional.ofNullable(coffee.getPrice())
+//                .ifPresent(price -> findCoffee.setPrice(price));
 
-        return coffeeRepository.save(findCoffee);
+        Coffee updatingCoffee = beanUtils.copyNonNullProperties(coffee, findCoffee);
+
+        return coffeeRepository.save(updatingCoffee);
     }
 
     public Coffee findCoffee(long coffeeId) {
