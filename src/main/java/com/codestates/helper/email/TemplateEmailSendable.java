@@ -24,7 +24,7 @@ public class TemplateEmailSendable implements EmailSendable {
 
     @Override
     public void send(String[] to, String subject, String message, String templateName) {
-        // TODO 템플릿을 사용한 이메일을 보낼 수 있습니다.
+        // 템플릿을 사용한 이메일을 보낼 수 있습니다.
         try {
             context.setVariable("message", message);
 
