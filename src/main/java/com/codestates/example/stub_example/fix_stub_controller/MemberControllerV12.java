@@ -41,9 +41,7 @@ public class MemberControllerV12 {
                         Member.MemberStatus.MEMBER_ACTIVE,
                         new Stamp());
 
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(response),
-                HttpStatus.CREATED);
+        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{member-id}")
@@ -57,9 +55,7 @@ public class MemberControllerV12 {
                         "010-2222-2222",
                         Member.MemberStatus.MEMBER_ACTIVE,
                         new Stamp());
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(response),
-                HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
     @GetMapping("/{member-id}")
@@ -72,9 +68,7 @@ public class MemberControllerV12 {
                         "010-1111-1111",
                         Member.MemberStatus.MEMBER_ACTIVE,
                         new Stamp());
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(response),
-                HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
     @GetMapping
@@ -99,8 +93,7 @@ public class MemberControllerV12 {
                 new PageImpl<>(List.of(response1, response2),
                         PageRequest.of(0, 10, Sort.by("memberId").descending()), 2);
 
-        return new ResponseEntity<>(
-                new MultiResponseDto<>(List.of(response1, response2), pageMembers), HttpStatus.OK);
+        return new ResponseEntity<>(new MultiResponseDto<>(List.of(response1, response2), pageMembers), HttpStatus.OK);
     }
 
     @DeleteMapping("/{member-id}")
