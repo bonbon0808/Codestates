@@ -1,16 +1,20 @@
 package com.codestates.burgerqueenspring.discount;
 
+import com.codestates.burgerqueenspring.Cart;
 import com.codestates.burgerqueenspring.discount.discountCondition.CozDiscountCondition;
 import com.codestates.burgerqueenspring.discount.discountCondition.DiscountCondition;
 import com.codestates.burgerqueenspring.discount.discountCondition.KidDiscountCondition;
 import com.codestates.burgerqueenspring.discount.discountPolicy.FixedAmountDiscountPolicy;
 import com.codestates.burgerqueenspring.discount.discountPolicy.FixedRateDiscountPolicy;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
-@Slf4j
 public class Discount {
     private DiscountCondition[] discountConditions;
+
+    private static final Logger log = LoggerFactory.getLogger(Discount.class);
 
     public Discount() {
         this.discountConditions = new DiscountCondition[]{

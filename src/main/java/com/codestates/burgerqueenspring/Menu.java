@@ -6,10 +6,13 @@ import com.codestates.burgerqueenspring.product.subproduct.Drink;
 import com.codestates.burgerqueenspring.product.subproduct.Hamburger;
 import com.codestates.burgerqueenspring.product.subproduct.Side;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Slf4j
 public class Menu {
     private Product[] products;
+    private static final Logger log = LoggerFactory.getLogger(Menu.class);
+
 
     public Menu(ProductRepository products) {
         this.products = products.getAllProducts();

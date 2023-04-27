@@ -3,11 +3,14 @@ package com.codestates.burgerqueenspring.order;
 import com.codestates.burgerqueenspring.Cart;
 import com.codestates.burgerqueenspring.discount.Discount;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Slf4j
 public class Order {
     private Cart cart;
     private Discount discount;
+
+    private static final Logger log = LoggerFactory.getLogger(Order.class);
 
     public Order(Cart cart, Discount discount) {
         this.cart = cart;

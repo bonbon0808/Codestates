@@ -7,16 +7,20 @@ import com.codestates.burgerqueenspring.product.subproduct.Drink;
 import com.codestates.burgerqueenspring.product.subproduct.Hamburger;
 import com.codestates.burgerqueenspring.product.subproduct.Side;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
 
-@Slf4j
 public class Cart {
+
     private Product[] items = new Product[0];
     private Scanner scanner = new Scanner(System.in);
     private ProductRepository productRepository;
-
     private Menu menu;
+
+    private static final Logger log = LoggerFactory.getLogger(Cart.class);
+
 
     public Cart(ProductRepository productRepository, Menu menu) {
         this.productRepository = productRepository;

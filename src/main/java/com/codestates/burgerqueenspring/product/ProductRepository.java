@@ -6,7 +6,6 @@ import com.codestates.burgerqueenspring.product.subproduct.Side;
 import org.springframework.stereotype.Component;
 
 
-@Component
 public class ProductRepository {
     private Product[] products = {
             new Hamburger(1, "새우버거", 3500, 500, false, 4500),
