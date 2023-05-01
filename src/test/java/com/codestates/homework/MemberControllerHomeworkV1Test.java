@@ -98,6 +98,15 @@ public class MemberControllerHomeworkV1Test {
                         .content(patchContent)   /** 중복 */
                 );
 
+        /**
+         * {
+         *      "data": {
+         *          "memberId": 1,
+         *          ..
+         *          "phone": "010-2222-222"
+         *      }
+         * }
+         */
         // then
         actions.andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.phone").value(patch.getPhone()));
@@ -133,6 +142,23 @@ public class MemberControllerHomeworkV1Test {
                 .andExpect(jsonPath("$.data.phone").value(post.getPhone()));
     }
 
+    /**
+     * {
+     *      "data": [
+     *      {
+     *                "memberId": 1,
+     *                ..
+     *                "phone": "010-1111-1111"
+     *      },
+     *      {
+     *                "memberId": 2,
+     *                ..
+     *                "phone": "010-2222-2222"
+     *      }
+     *
+     *      ]
+     * }
+     */
     @Test
     void getMembersTest() throws Exception {
         /** 중복 코드 시작 */
