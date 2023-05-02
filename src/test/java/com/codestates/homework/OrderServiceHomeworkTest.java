@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -30,11 +31,10 @@ public class OrderServiceHomeworkTest {
         // given
         long orderId = 1L;
         Order order = new Order();
-        order.setOrderId(orderId);
-        order.setOrderStatus(Order.OrderStatus.ORDER_CONFIRM);
+        order.setOrderStatus(Order.OrderStatus.ORDER_CONFIRM); // 다음 로직에 사용되는 꼭 필요한 정보
 
         // Stubbing by Mockito
-        given(orderRepository.findById(orderId)).willReturn(Optional.of(order));
+        given(orderRepository.findById(Mockito.anyLong())).willReturn(Optional.of(order));
 
         // when
         Executable executable = () -> orderService.cancelOrder(orderId);
