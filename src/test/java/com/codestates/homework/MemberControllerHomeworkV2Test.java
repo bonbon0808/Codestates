@@ -1,36 +1,38 @@
 package com.codestates.homework;
 
 import com.codestates.helper.MemberControllerTestHelper;
-import com.codestates.helper.StubData;
 import com.codestates.member.dto.MemberDto;
+import com.codestates.member.entity.Member;
+import com.codestates.member.repository.MemberRepository;
+import com.codestates.stamp.Stamp;
 import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Controller의 API만 이용하는 방법(리팩토링 후)
+ * MemberRepository를 이용해 테스트 케이스 실행 전에 테스트 데이터를 미리 저장한다.
  */
-@Transactional    // 테스트 케이스 하나의 실행이 끝나면 매 번 rollback 처리를 해준다.
+@Transactional   // 테스트 케이스 하나의 실행이 끝나면 매 번 rollback 처리를 해준다.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class MemberControllerHomeworkV2Test implements MemberControllerTestHelper {
@@ -40,44 +42,62 @@ public class MemberControllerHomeworkV2Test implements MemberControllerTestHelpe
     @Autowired
     private Gson gson;
 
-    private ResultActions postResultActions;
-    private MemberDto.Post post;
-
-    @BeforeEach
-    public void init() throws Exception {
-        // given
-        this.post = (MemberDto.Post) StubData.MockMember.getRequestBody(HttpMethod.POST);
-        String content = gson.toJson(post);
-        URI uri = getURI();
-        this.postResultActions = mockMvc.perform(postRequestBuilder(uri, content));
-    }
+    @Autowired
+    private MemberRepository memberRepository;
 
     @Test
     public void postMemberTest() throws Exception {
-        // given
-        // init() 에서..
+        /** 중복 코드 시작 */
+        // given: MemberController의 postMember()를 테스트 하기 위한 테스트 데이터를 미리 생성
+        MemberDto.Post post = new MemberDto.Post("hgd@gmail.com","홍길동","010-1111-1111");
+        String content = gson.toJson(post);
+        URI uri = UriComponentsBuilder.newInstance().path("/v11/members").build().toUri();
 
         // when
-        // init() 에서..
+        ResultActions actions =
+                mockMvc.perform(
+                            post(uri)
+                                    .accept(MediaType.APPLICATION_JSON)   /** 중복 */
+                                    .contentType(MediaType.APPLICATION_JSON)   /** 중복 */
+                                    .content(content)   /** 중복 */
+                );
+        /** 중복 코드 끝 */
 
         // then
-        this.postResultActions
+        actions
                 .andExpect(status().isCreated())
                 .andExpect(header().string("Location", is(startsWith("/v11/members/"))));
     }
 
     @Test
     void patchMemberTest() throws Exception {
+        /** 중복 코드 시작 */
         // given
-        String location = getResourceLocation();
+        // MemberController의 patchMember()를 테스트하기 위해 MemberRespository를 이용해 테스트 데이터를 생성 후, DB에 저장
+        Member member = new Member("hgd@gmail.com","홍길동","010-1111-1111");
+        member.setStamp(new Stamp());
 
-        MemberDto.Patch patch =
-                (MemberDto.Patch) StubData.MockMember.getRequestBody(HttpMethod.PATCH); // 별도의 Stub Data를 만들어서 재사용
-        String content = gson.toJson(patch);
+        Member resultMember = memberRepository.save(member);
+
+        long memberId = resultMember.getMemberId();
+        /** 중복 코드 끝 */
+
+        // MemberController의 patchMember()를 테스트하기 위한 테스트 데이터를 생성 후, DB에 업데이트
+        MemberDto.Patch patch = MemberDto.Patch.builder().phone("010-2222-2222").build();
+
+        String patchContent = gson.toJson(patch);
+
+        /** 중복 */
+        URI patchUri = UriComponentsBuilder.newInstance().path("/v11/members/{member-id}").buildAndExpand(memberId).toUri();
 
         // when
         ResultActions actions =
-                mockMvc.perform(patchRequestBuilder(location, content));
+                mockMvc.perform(
+                            patch(patchUri)
+                            .accept(MediaType.APPLICATION_JSON)      /** 중복 */
+                            .contentType(MediaType.APPLICATION_JSON) /** 중복 */
+                            .content(patchContent)   /** 중복 */
+                );
 
         // then
         actions.andExpect(status().isOk())
@@ -86,29 +106,46 @@ public class MemberControllerHomeworkV2Test implements MemberControllerTestHelpe
 
     @Test
     void getMemberTest() throws Exception {
+        /** 중복 코드 시작 */
         // given
-        // init() 에서..
+        // MemberController의 getMember()를 테스트하기 위해 MemberRespository를 이용해 테스트 데이터를 생성 후, DB에 저장
+        Member member = new Member("hgd@gmail.com","홍길동","010-1111-1111");
+        member.setStamp(new Stamp());
 
-        // when
-        String location = getResourceLocation();
+        Member resultMember = memberRepository.save(member);
 
-        // then
-        mockMvc.perform(getRequestBuilder(location))
+        long memberId = resultMember.getMemberId();
+        /** 중복 코드 끝 */
+
+        /** 중복 */
+        URI getUri = UriComponentsBuilder.newInstance().path("/v11/members/{member-id}").buildAndExpand(memberId).toUri();
+
+        // when / then
+        mockMvc.perform(
+                    get(getUri)
+                            .accept(MediaType.APPLICATION_JSON)   /** 중복 */
+                )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.email").value(this.post.getEmail()))
-                .andExpect(jsonPath("$.data.name").value(this.post.getName()))
-                .andExpect(jsonPath("$.data.phone").value(this.post.getPhone()));
+                .andExpect(jsonPath("$.data.email").value(resultMember.getEmail()))
+                .andExpect(jsonPath("$.data.name").value(resultMember.getName()))
+                .andExpect(jsonPath("$.data.phone").value(resultMember.getPhone()));
     }
 
     @Test
     void getMembersTest() throws Exception {
+        /** 중복 코드 시작 */
         // given
-        String content = gson.toJson(new MemberDto.Post("hgd2@gmail.com", "홍길동2",
-                "010-2222-2222"));
-        URI uri = getURI();
+        // MemberController의 getMembers()를 테스트하기 위해 MemberRespository를 이용해 테스트 데이터를 생성 후, DB에 저장
+        Member member1 = new Member("hgd1@gmail.com","홍길동1","010-1111-1111");
+        member1.setStamp(new Stamp());
 
-        // init에서 첫번째 데이터를 DB에 넣어 준 후, 두 번째 데이터 한번 더..
-        mockMvc.perform(postRequestBuilder(uri, content));
+        Member resultMember1 = memberRepository.save(member1);
+
+        Member member2 = new Member("hgd2@gmail.com","홍길동2","010-2222-2222");
+        member2.setStamp(new Stamp());
+
+        Member resultMember2 = memberRepository.save(member2);
+        /** 중복 코드 끝 */
 
         String page = "1";
         String size = "10";
@@ -116,8 +153,16 @@ public class MemberControllerHomeworkV2Test implements MemberControllerTestHelpe
         queryParams.add("page", page);
         queryParams.add("size", size);
 
+        /** 중복 */
+        URI getUri = UriComponentsBuilder.newInstance().path("/v11/members").build().toUri();
+
         // when
-        ResultActions actions = mockMvc.perform(getRequestBuilder(uri, queryParams));
+        ResultActions actions =
+                mockMvc.perform(
+                            get(getUri)
+                                    .params(queryParams)
+                                    .accept(MediaType.APPLICATION_JSON)   /** 중복 */
+                );
 
         // then
         MvcResult result = actions
@@ -132,20 +177,22 @@ public class MemberControllerHomeworkV2Test implements MemberControllerTestHelpe
 
     @Test
     void deleteMemberTest() throws Exception {
+        /** 중복 코드 시작 */
         // given
-        // init() 에서 DB에 넣어준다.
+        // MemberController의 deleteMember()를 테스트하기 위해 MemberRespository를 이용해 테스트 데이터를 생성 후, DB에 저장
+        Member member = new Member("hgd@gmail.com","홍길동","010-1111-1111");
+        member.setStamp(new Stamp());
 
-        // when
-        String location = getResourceLocation();
+        Member resultMember = memberRepository.save(member);
 
-        // then
-        mockMvc.perform(deleteRequestBuilder(location))
+        long memberId = resultMember.getMemberId();
+        /** 중복 코드 끝 */
+
+        /** 중복 */
+        URI uri = UriComponentsBuilder.newInstance().path("/v11/members/{member-id}").buildAndExpand(memberId).toUri();
+
+        // when / then
+        mockMvc.perform(delete(uri))
                 .andExpect(status().isNoContent());
-    }
-
-    private String getResourceLocation() {
-        String location = this.postResultActions.andReturn().getResponse().getHeader("Location"); // "/v11/members/1"
-
-        return location;
     }
 }

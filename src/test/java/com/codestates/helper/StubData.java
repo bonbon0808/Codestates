@@ -19,9 +19,8 @@ public class StubData {
     private static Map<HttpMethod, Object> stubRequestBody;
     static {
         stubRequestBody = new HashMap<>();
-        stubRequestBody.put(HttpMethod.POST, new MemberDto.Post("hgd@gmail.com","홍길동",
-                "010-1111-1111"));
-        stubRequestBody.put(HttpMethod.PATCH, new MemberDto.Patch(0, null, "010-2222-2222", null));
+        stubRequestBody.put(HttpMethod.POST, new MemberDto.Post("hgd@gmail.com","홍길동", "010-1111-1111"));
+        stubRequestBody.put(HttpMethod.PATCH, MemberDto.Patch.builder().phone("010-2222-2222").build());
     }
 
     public static class MockMember {
