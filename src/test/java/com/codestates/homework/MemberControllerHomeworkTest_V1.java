@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -101,10 +102,8 @@ public class MemberControllerHomeworkTest_V1 {
         // given
         long memberId = 1L;
 
-        MemberDto.Patch patch = new MemberDto.Patch(0,
-                                                "홍길동",
-                                            "010-2222-2222",
-                                                Member.MemberStatus.MEMBER_ACTIVE);
+        MemberDto.Patch patch =
+                (MemberDto.Patch) StubData.MockMember.getRequestBody(HttpMethod.PATCH); // 별도의 Stub Data를 만들어서 재사용
 
         MemberDto.Response response = new MemberDto.Response(1L,
                                                         "hgd@gmail.com",

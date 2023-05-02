@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional     // 테스트 케이스 하나의 실행이 끝나면 매 번 rollback 처리를 해준다.
 @SpringBootTest
 @AutoConfigureMockMvc
-public class MemberControllerV1Test {
+public class MemberControllerHomeworkV1_1Test {
     @Autowired
     private MockMvc mockMvc;
 
@@ -85,7 +85,7 @@ public class MemberControllerV1Test {
         /** 중복 코드 끝 */
 
         // MemberController의 patchMember()를 테스트하기 위한 테스트 데이터를 생성 후, DB에 업데이트
-        MemberDto.Patch patch = new MemberDto.Patch(1, null, "010-2222-2222", null);
+        MemberDto.Patch patch = MemberDto.Patch.builder().phone("010-2222-2222").build();
 
         String patchContent = gson.toJson(patch);
 
@@ -98,6 +98,15 @@ public class MemberControllerV1Test {
                         .content(patchContent)   /** 중복 */
                 );
 
+        /**
+         * {
+         *      "data": {
+         *          "memberId": 1,
+         *          ..
+         *          "phone": "010-2222-222"
+         *      }
+         * }
+         */
         // then
         actions.andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.phone").value(patch.getPhone()));
@@ -133,6 +142,23 @@ public class MemberControllerV1Test {
                 .andExpect(jsonPath("$.data.phone").value(post.getPhone()));
     }
 
+    /**
+     * {
+     *      "data": [
+     *      {
+     *                "memberId": 1,
+     *                ..
+     *                "phone": "010-1111-1111"
+     *      },
+     *      {
+     *                "memberId": 2,
+     *                ..
+     *                "phone": "010-2222-2222"
+     *      }
+     *
+     *      ]
+     * }
+     */
     @Test
     void getMembersTest() throws Exception {
         /** 중복 코드 시작 */
