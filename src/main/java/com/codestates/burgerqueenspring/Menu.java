@@ -11,12 +11,11 @@ import org.slf4j.LoggerFactory;
 
 public class Menu {
     private Product[] products;
-    private static final Logger log = LoggerFactory.getLogger(Menu.class);
-
-
     public Menu(ProductRepository products) {
         this.products = products.getAllProducts();
     }
+
+    private static final Logger log = LoggerFactory.getLogger(Menu.class);
 
     public void printMenu() {
         log.info("⭐️ 메서드 호출️ ⭐");

@@ -3,6 +3,8 @@ package com.codestates.burgerqueenspring.order;
 import com.codestates.burgerqueenspring.Cart;
 import com.codestates.burgerqueenspring.Menu;
 import com.codestates.burgerqueenspring.product.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
 
@@ -12,6 +14,7 @@ public class OrderApp {
     private Menu menu;
     private Cart cart;
     private Order order;
+
 
     public OrderApp(ProductRepository productRepository, Menu menu, Cart cart, Order order) {
         this.productRepository = productRepository;
