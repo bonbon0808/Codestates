@@ -153,10 +153,8 @@ public class MemberControllerHomeworkTest_V1 {
                                                             new Stamp());
 
         // Stubbing by Mockito
-        given(memberService.findMember(Mockito.anyLong()))
-                .willReturn(new Member());
-        given(mapper.memberToMemberResponse(Mockito.any(Member.class)))
-                .willReturn(response);
+        given(memberService.findMember(Mockito.anyLong())).willReturn(new Member());
+        given(mapper.memberToMemberResponse(Mockito.any(Member.class))).willReturn(response);
 
         URI uri = UriComponentsBuilder.newInstance().path("/v11/members/{memberId}").buildAndExpand(memberId).toUri();
 
@@ -210,10 +208,8 @@ public class MemberControllerHomeworkTest_V1 {
          * getMembers() 핸들러 메서드의 로직 중에서 다음 라인의 로직(List<Member> members = pageMembers.getContent();)에서
          * 사용되기 때문에 구체적인 값이 포함된 객체(pageMembers)를 지정해야 한다.
          */
-        given(memberService.findMembers(Mockito.anyInt(), Mockito.anyInt()))
-                .willReturn(pageMembers);
-        given(mapper.membersToMemberResponses(Mockito.anyList()))
-                .willReturn(responses);
+        given(memberService.findMembers(Mockito.anyInt(), Mockito.anyInt())).willReturn(pageMembers);
+        given(mapper.membersToMemberResponses(Mockito.anyList())).willReturn(responses);
 
         String page = "1";
         String size = "10";
