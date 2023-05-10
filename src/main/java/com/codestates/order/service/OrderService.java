@@ -29,14 +29,13 @@ public class OrderService {
     public Order createOrder(Order order) {
         // 회원이 존재하는지 확인(일종의 도메인 규칙 1)
         memberService.findVerifiedMember(order.getMemberId());
-//        memberService.findVerifiedMember(order.getMemberId().getId());  // AggregateReference 사용 시,
 
         // 커피가 존재하는지 조회해야 됨(일종의 도메인 규칙 2)
         // TODO 여기도 네이티브 쿼리로 join해서 가져오는게 더 나은 성능임.
         order.getOrderCoffees()
                 .stream()
-                .forEach(coffeeRef -> {
-                    coffeeService.findVerifiedCoffee(coffeeRef.getCoffeeId());
+                .forEach(orderCoffee -> {
+                    coffeeService.findVerifiedCoffee(orderCoffee.getCoffeeId());
                 });
         return orderRepository.save(order);
     }
