@@ -8,7 +8,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Getter
 @Builder
 @Table("ORDER_COFFEE")
-public class CoffeeRef {
+public class OrderCoffee {
     @Id
     private long orderCoffeeId;
 

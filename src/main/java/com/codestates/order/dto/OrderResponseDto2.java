@@ -3,7 +3,7 @@ package com.codestates.order.dto;
 import com.codestates.coffee.entity.Coffee;
 import com.codestates.coffee.service.CoffeeService;
 import com.codestates.member.entity.Member;
-import com.codestates.order.entity.CoffeeRef;
+import com.codestates.order.entity.OrderCoffee;
 import com.codestates.order.entity.Order;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,21 +33,21 @@ public class OrderResponseDto2 {
     }
 
     // Set<CoffeeRef> coffeeRefs 타입을 List<OrderCoffeeResponseDto> 타입으로 변환해 주어야 한다.
-    public void setOrderCoffees(Set<CoffeeRef> coffeeRefs) {
+    public void setOrderCoffees(Set<OrderCoffee> coffeeRefs) {
         List<OrderCoffeeResponseDto> orderCoffees =
                 coffeeRefs.stream()
-                        .map(coffeeRef -> {
+                        .map(orderCoffee -> {
                             // DI를 할 수 없으므로, 직접 객체를 생성해줘야 한다.
                             Coffee coffee =
                                     new CoffeeService(null/* CoffeeRepository 인스턴스를 넘겨야한다.*/)
-                                            .findCoffee(coffeeRef.getCoffeeId());
+                                            .findCoffee(orderCoffee.getCoffeeId());
 
                             return new OrderCoffeeResponseDto(coffee.getCoffeeId(),
                                     coffee.getKorName(),
                                     coffee.getEngName(),
                                     coffee.getPrice(),
 //                            coffee.getPrice().getValue(), // Money 타입을 사용할 경우
-                                    coffeeRef.getQuantity());
+                                    orderCoffee.getQuantity());
                         }).collect(Collectors.toList());
 
         this.orderCoffees = orderCoffees;

@@ -29,7 +29,7 @@ public class Order2 {
     private AggregateReference<Member, Long> memberId;
 
     @MappedCollection(idColumn = "ORDER_ID", keyColumn = "ORDER_COFFEE_ID")
-    private Set<CoffeeRef> orderCoffees = new LinkedHashSet<>();
+    private Set<OrderCoffee> orderCoffees = new LinkedHashSet<>();
 
     private OrderStatus orderStatus = OrderStatus.ORDER_REQUEST;
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -40,12 +40,12 @@ public class Order2 {
     }
 
     // Entity에서 매핑을 처리하는 케이스
-    public void setOrderCoffees(List<CoffeeRef> orderCoffees) {
-        Set<CoffeeRef> convertedOrderCoffees =
+    public void setOrderCoffees(List<OrderCoffee> orderCoffees) {
+        Set<OrderCoffee> convertedOrderCoffees =
                 orderCoffees
                         .stream()
                         .map(orderCoffeeDto ->
-                                CoffeeRef.builder()
+                                OrderCoffee.builder()
                                         .coffeeId(orderCoffeeDto.getCoffeeId())
                                         .quantity(orderCoffeeDto.getQuantity())
                                         .build())

@@ -3,13 +3,12 @@ package com.codestates.order.mapper;
 import com.codestates.coffee.entity.Coffee;
 import com.codestates.coffee.service.CoffeeService;
 import com.codestates.order.dto.*;
-import com.codestates.order.entity.CoffeeRef;
+import com.codestates.order.entity.OrderCoffee;
 import com.codestates.order.entity.Order;
 import com.codestates.order.entity.ReadableOrderCoffee;
 import com.google.common.collect.Streams;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
-import org.springframework.data.jdbc.core.mapping.AggregateReference;
 
 import java.util.List;
 import java.util.Map;
@@ -25,12 +24,12 @@ public interface OrderMapper {
 
     default Order orderPostDtoToOrder(OrderPostDto orderPostDto) {
         Order order = new Order();
-        order.setMemberId(new AggregateReference.IdOnlyAggregateReference(orderPostDto.getMemberId()));
-        Set<CoffeeRef> orderCoffees =
+        order.setMemberId(orderPostDto.getMemberId());
+        Set<OrderCoffee> orderCoffees =
                 orderPostDto.getOrderCoffees()
                         .stream()
                         .map(orderCoffeeDto ->
-                                CoffeeRef.builder()
+                                OrderCoffee.builder()
                                         .coffeeId(orderCoffeeDto.getCoffeeId())
                                         .quantity(orderCoffeeDto.getQuantity())
                                         .build())
@@ -40,12 +39,31 @@ public interface OrderMapper {
         return order;
     }
 
+    // AggregateReference 사용 시
+//    default Order orderPostDtoToOrder(OrderPostDto orderPostDto) {
+//        Order order = new Order();
+//        order.setMemberId(new AggregateReference.IdOnlyAggregateReference(orderPostDto.getMemberId()));
+//        Set<CoffeeRef> orderCoffees =
+//                orderPostDto.getOrderCoffees()
+//                        .stream()
+//                        .map(orderCoffeeDto ->
+//                                CoffeeRef.builder()
+//                                        .coffeeId(orderCoffeeDto.getCoffeeId())
+//                                        .quantity(orderCoffeeDto.getQuantity())
+//                                        .build())
+//                        .collect(Collectors.toSet());
+//        order.setOrderCoffees(orderCoffees);
+//
+//        return order;
+//    }
+
 //    OrderResponseDto2 orderToOrderResponseDto(Order order);   // ResponseDto에서 더 많은 일을 하게 되는 케이스
 
     default OrderResponseDto orderToOrderResponseDto(CoffeeService coffeeService,
                                                      Order order) {
 
-        long memberId = order.getMemberId().getId();
+        long memberId = order.getMemberId();
+//        long memberId = order.getMemberId().getId(); // AggregateReference 사용 시,
 
         List<OrderCoffeeResponseDto> orderCoffees =
                 orderCoffeesToOrderCoffeeResponseDtos(coffeeService, order.getOrderCoffees());
@@ -67,27 +85,27 @@ public interface OrderMapper {
 
     default List<OrderCoffeeResponseDto> orderCoffeesToOrderCoffeeResponseDtos(
                                                         CoffeeService coffeeService,
-                                                        Set<CoffeeRef> orderCoffees) {
+                                                        Set<OrderCoffee> orderCoffees) {
         return orderCoffees.stream()
-                .map(coffeeRef -> {
-                    Coffee coffee = coffeeService.findCoffee(coffeeRef.getCoffeeId()); // N + 1 이슈 발생
+                .map(orderCoffee -> {
+                    Coffee coffee = coffeeService.findCoffee(orderCoffee.getCoffeeId()); // N + 1 이슈 발생
 
                     return new OrderCoffeeResponseDto(coffee.getCoffeeId(),
                             coffee.getKorName(),
                             coffee.getEngName(),
                             coffee.getPrice(),
 //                            coffee.getPrice().getValue(), // Money 타입을 사용할 경우
-                            coffeeRef.getQuantity());
+                            orderCoffee.getQuantity());
                 }).collect(Collectors.toList());
     }
 
     // N + 1 이슈가 어느 정도는 개선된 orderToOrderCoffeeResponseDtoV2 버전
     default List<OrderCoffeeResponseDto> orderCoffeesToOrderCoffeeResponseDtosV2(CoffeeService coffeeService,
-                                                                               Set<CoffeeRef> orderCoffees) {
+                                                                               Set<OrderCoffee> orderCoffees) {
         // 주문한 커피의 coffeeId만 수집
         List<Long> coffeeIds =
                 orderCoffees.stream()
-                        .map(coffeeRef -> coffeeRef.getCoffeeId())
+                        .map(orderCoffee -> orderCoffee.getCoffeeId())
                         .collect(Collectors.toList());
 
         // 한번의 쿼리로 주문한 커피 정보 조회
@@ -98,12 +116,12 @@ public interface OrderMapper {
         return Streams
                 .zip(
                         coffees.stream().sorted(comparing(Coffee::getCoffeeId)),
-                        orderCoffees.stream().sorted(comparing(CoffeeRef::getCoffeeId)),  // Quantity 정보를 얻기 위한 Set<CoffeeRef>
-                        (coffee, coffeeRef) -> new OrderCoffeeResponseDto(coffee.getCoffeeId(),
+                        orderCoffees.stream().sorted(comparing(OrderCoffee::getCoffeeId)),  // Quantity 정보를 얻기 위한 Set<CoffeeRef>
+                        (coffee, orderCoffee) -> new OrderCoffeeResponseDto(coffee.getCoffeeId(),
                                 coffee.getKorName(),
                                 coffee.getEngName(),
                                 coffee.getPrice(),
-                                coffeeRef.getQuantity()))
+                                orderCoffee.getQuantity()))
                 .collect(Collectors.toList());
     }
 
