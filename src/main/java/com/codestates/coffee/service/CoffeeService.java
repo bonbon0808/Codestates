@@ -52,7 +52,7 @@ public class CoffeeService {
     public List<Coffee> findOrderedCoffees(Order order) {
         return order.getOrderCoffees()
                 .stream()
-                .map(coffeeRef -> findCoffee(coffeeRef.getCoffeeId()))
+                .map(orderCoffee -> findCoffee(orderCoffee.getCoffeeId()))
                 .collect(Collectors.toList());
     }
 

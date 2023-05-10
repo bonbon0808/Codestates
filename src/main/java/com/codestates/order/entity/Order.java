@@ -20,14 +20,10 @@ public class Order {
     private long orderId;
 
     // 테이블 외래키처럼 memberId를 추가해서 참조하도록 한다..
-    private AggregateReference<Member, Long> memberId;
+    private long memberId;
 
     @MappedCollection(idColumn = "ORDER_ID")
-    private Set<CoffeeRef> orderCoffees = new LinkedHashSet<>();
-
-//    @MappedCollection(idColumn = "ORDER_ID", keyColumn = "ORDER_COFFEE_ID")
-//    private List<CoffeeRef> orderCoffees = new ArrayList<>();
-
+    private Set<OrderCoffee> orderCoffees = new LinkedHashSet<>();
     private OrderStatus orderStatus = OrderStatus.ORDER_REQUEST;
     private LocalDateTime createdAt;
 

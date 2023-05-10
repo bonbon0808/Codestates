@@ -7,7 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Getter
 @AllArgsConstructor
 @Table("ORDER_COFFEE")
-public class CoffeeRef {
+public class OrderCoffee {
     private long coffeeId;
     private int quantity;
 }
