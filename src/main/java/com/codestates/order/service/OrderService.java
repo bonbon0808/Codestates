@@ -27,13 +27,13 @@ public class OrderService {
 
     public Order createOrder(Order order) {
         // 회원이 존재하는지 확인
-        memberService.findVerifiedMember(order.getMemberId().getId());
+        memberService.findVerifiedMember(order.getMemberId());
 
         // 커피가 존재하는지 조회해야 됨
         order.getOrderCoffees()
                 .stream()
-                .forEach(coffeeRef -> {
-                    coffeeService.findVerifiedCoffee(coffeeRef.getCoffeeId());
+                .forEach(orderCoffee -> {
+                    coffeeService.findVerifiedCoffee(orderCoffee.getCoffeeId());
                 });
         return orderRepository.save(order);
     }
