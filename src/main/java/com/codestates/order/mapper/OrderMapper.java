@@ -74,7 +74,7 @@ public interface OrderMapper {
      *                 {@literal @}Mapping 애너테이션 이용 예
      *                 <ul>
      *                     <li>
-     *                         <code>{@literal @}Mapping(source="coffee.coffeeId", target="coffeeId")</code>
+     *                         <code>{@literal @}Mapping(source="member.memberId", target="memberId")</code>
      *                     </li>
      *                 </ul>
      *             </li>
