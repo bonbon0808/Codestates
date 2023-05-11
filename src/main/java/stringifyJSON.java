@@ -39,24 +39,60 @@ import java.util.*;
 
 public class stringifyJSON {
 
-  public String ObjectMapper(Object data) throws JsonProcessingException {
-    ObjectMapper mapper = new ObjectMapper();
-    return mapper.writeValueAsString(data);
-  }
+    public String ObjectMapper(Object data) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(data);
+    }
 
-  public String stringify(Object data) {
+    public String stringify(Object data) {
 
-    //입력된 값이 문자열일 경우
+        //입력된 값이 문자열일 경우
+        if (data instanceof String) {
+            //return data.toString();
+            return "\"" + data.toString() + "\"";
+        }
 
-    //입력된 값이 Integer일 경우
 
-    //입력된 값이 Boolean일 경우
+        //입력된 값이 Integer일 경우
 
-    //입력된 값이 Object[]일 경우
+        if (data instanceof Integer) {
+            return data.toString();
+        }
 
-    //입력된 값이 HashMap일 경우
+        //입력된 값이 Boolean일 경우
 
-    //지정되지 않은 타입의 경우에는 "null"을 리턴합니다.
+        if (data instanceof Boolean) {
+            return data.toString();
+        }
 
-  }
+
+        //입력된 값이 Object[]일 경우
+        if(data instanceof  Object[]) {
+            // 다운캐스팅
+            Object[] newData = (Object[]) data;
+            // 최소값이 배열의 길이가 0이 된 경우 나가기
+            if (newData.length == 0) return "[]";
+
+            String jsonData = "";
+
+            for(Object obj: newData){
+                jsonData = jsonData+stringify(obj)+",";
+            }
+            jsonData = jsonData.substring(0, jsonData.length()-1);
+
+            return String.format("[%s]", jsonData);
+        }
+
+
+        //입력된 값이 HashMap일 경우
+
+
+        //지정되지 않은 타입의 경우에는 "null"을 리턴합니다.
+        return "null";
+
+
+    }
 }
+
+
+
