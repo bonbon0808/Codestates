@@ -1,6 +1,5 @@
 const loginButton = document.querySelector("#login-button");
-const url =
-  "http://ec2-13-125-237-143.ap-northeast-2.compute.amazonaws.com:8080";
+const url = "http://www.example.com"; // url을 개인 EC2 주소(포트 포함)로 변경합니다.
 
 function getDbStatus() {
   fetch(`${url}/status`, {
@@ -28,7 +27,6 @@ loginButton.addEventListener("click", (event) => {
   const username = document.querySelector('input[name="username"]').value;
   const password = document.querySelector('input[name="password"]').value;
 
-  // 아래 주소를 개인 EC2 주소로 변경합니다.
   fetch(`${url}/signin`, {
     method: "POST",
     credentials: "include",
