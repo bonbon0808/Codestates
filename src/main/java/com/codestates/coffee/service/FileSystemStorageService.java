@@ -13,7 +13,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @Slf4j
-@Service
 public class FileSystemStorageService implements StorageService {
     private final Path rootLocation = Paths.get("D:\\output");;
     @Override

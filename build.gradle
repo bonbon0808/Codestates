@@ -37,6 +37,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 	implementation 'com.google.code.gson:gson'
+	implementation 'software.amazon.awssdk:s3:2.17.41'
 }
 
 tasks.named('test') {
