@@ -3,8 +3,9 @@ package com.codestates.burgerqueenspring.product;
 import com.codestates.burgerqueenspring.product.subproduct.Drink;
 import com.codestates.burgerqueenspring.product.subproduct.Hamburger;
 import com.codestates.burgerqueenspring.product.subproduct.Side;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class ProductRepository {
     private Product[] products = {
             new Hamburger(1, "새우버거", 3500, 500, false, 4500),

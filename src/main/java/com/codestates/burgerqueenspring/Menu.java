@@ -5,10 +5,14 @@ import com.codestates.burgerqueenspring.product.ProductRepository;
 import com.codestates.burgerqueenspring.product.subproduct.Drink;
 import com.codestates.burgerqueenspring.product.subproduct.Hamburger;
 import com.codestates.burgerqueenspring.product.subproduct.Side;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Menu {
     private Product[] products;
 
+    @Autowired
     public Menu(ProductRepository products) {
         this.products = products.getAllProducts();
     }

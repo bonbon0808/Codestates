@@ -8,31 +8,40 @@ import com.codestates.burgerqueenspring.discount.discountPolicy.FixedAmountDisco
 import com.codestates.burgerqueenspring.discount.discountPolicy.FixedRateDiscountPolicy;
 import com.codestates.burgerqueenspring.order.Order;
 import com.codestates.burgerqueenspring.product.ProductRepository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-public class AppConfigurer {
-
-    private Cart cart = new Cart(productRepository(), menu());
-
-    public Menu menu() {
-        return new Menu(productRepository());
-    }
-
-    public ProductRepository productRepository() {
-        return new ProductRepository();
-    }
-
-    public Cart cart() {
-        return cart;
-    }
-
-    public Order order() {
-        return new Order(cart(), discount());
-    }
-
-    public Discount discount() {
-        return new Discount(new DiscountCondition[] {
-                new CozDiscountCondition(new FixedRateDiscountPolicy()),
-                new KidDiscountCondition(new FixedAmountDiscountPolicy())
-        });
-    }
-}
+//@Configuration
+//public class AppConfigurer {
+//
+//
+//    //private Cart cart = new Cart(productRepository(), menu());
+//
+//    @Bean
+//    public Menu menu() {
+//        return new Menu(productRepository());
+//    }
+//
+//    @Bean
+//    public ProductRepository productRepository() {
+//        return new ProductRepository();
+//    }
+//
+//    @Bean
+//    public Cart cart() {
+//        return new Cart(productRepository(),menu());
+//    }
+//
+//    @Bean
+//    public Order order() {
+//        return new Order(cart(), discount());
+//    }
+//
+//    @Bean
+//    public Discount discount() {
+//        return new Discount(new DiscountCondition[] {
+//                new CozDiscountCondition(new FixedRateDiscountPolicy()),
+//                new KidDiscountCondition(new FixedAmountDiscountPolicy())
+//        });
+//    }
+//}

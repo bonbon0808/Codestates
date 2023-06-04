@@ -6,9 +6,12 @@ import com.codestates.burgerqueenspring.product.subproduct.BurgerSet;
 import com.codestates.burgerqueenspring.product.subproduct.Drink;
 import com.codestates.burgerqueenspring.product.subproduct.Hamburger;
 import com.codestates.burgerqueenspring.product.subproduct.Side;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class Cart {
     private Product[] items = new Product[0];
     private Scanner scanner = new Scanner(System.in);
@@ -16,6 +19,7 @@ public class Cart {
 
     private Menu menu;
 
+    @Autowired
     public Cart(ProductRepository productRepository, Menu menu) {
         this.productRepository = productRepository;
         this.menu = menu;

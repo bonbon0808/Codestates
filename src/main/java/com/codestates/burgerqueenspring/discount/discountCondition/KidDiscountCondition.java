@@ -1,14 +1,17 @@
 package com.codestates.burgerqueenspring.discount.discountCondition;
 
 import com.codestates.burgerqueenspring.discount.discountPolicy.DiscountPolicy;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class KidDiscountCondition implements DiscountCondition {
     private boolean isSatisfied;
     private DiscountPolicy discountPolicy;
 
-    public KidDiscountCondition(DiscountPolicy discountPolicy) {
+    public KidDiscountCondition(@Qualifier("fixedAmount") DiscountPolicy discountPolicy) {
         this.discountPolicy = discountPolicy;
     }
 

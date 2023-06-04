@@ -1,12 +1,18 @@
 package com.codestates.burgerqueenspring.discount.discountCondition;
 
 import com.codestates.burgerqueenspring.discount.discountPolicy.DiscountPolicy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class CozDiscountCondition implements DiscountCondition {
 
     private boolean isSatisfied;
+
+    //@Autowired
     private DiscountPolicy discountPolicy;
 
     public CozDiscountCondition(DiscountPolicy discountPolicy) {

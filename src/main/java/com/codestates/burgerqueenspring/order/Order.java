@@ -3,11 +3,14 @@ package com.codestates.burgerqueenspring.order;
 import com.codestates.burgerqueenspring.Cart;
 import com.codestates.burgerqueenspring.discount.Discount;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Order {
     private Cart cart;
     private Discount discount;
 
+    @Autowired
     public Order(Cart cart, Discount discount) {
         this.cart = cart;
         this.discount = discount;
