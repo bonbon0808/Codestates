@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
 @SpringBootApplication
-public class BeTodoApplication {
+public class BeSolutionTodoListApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BeTodoApplication.class, args);
+		SpringApplication.run(BeSolutionTodoListApplication.class, args);
 	}
 
 }
