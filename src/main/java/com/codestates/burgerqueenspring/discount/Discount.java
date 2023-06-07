@@ -37,9 +37,9 @@ public class Discount {
 
     public int discount(int price) {
 
-        log.info("⭐️ 메서드 호출️ ⭐");
-        log.info("============= 메서드명 = dicount =============");
-        log.info("[파라미터 타입] = Integer, [파라미터 값] = {}", price);
+//        log.info("⭐️ 메서드 호출️ ⭐");
+//        log.info("============= 메서드명 = dicount =============");
+//        log.info("[파라미터 타입] = Integer, [파라미터 값] = {}", price);
 
         int discountedPrice = price;
 
