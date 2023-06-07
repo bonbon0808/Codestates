@@ -32,7 +32,7 @@ public class TodoController {
 
     @PostMapping
     public ResponseEntity postTodo(@Valid @RequestBody TodoDto.Post requestBody) {
-        Todo createdTodo = todoService.creteTodo(mapper.todoPostDtoToTodo(requestBody));
+        Todo createdTodo = todoService.createTodo(mapper.todoPostDtoToTodo(requestBody));
         URI location = UriCreator.createUri(TODO_DEFAULT_URL, createdTodo.getTodoId());
 
         return ResponseEntity.created(location).build();
@@ -69,7 +69,7 @@ public class TodoController {
     }
 
     @DeleteMapping
-    public ResponseEntity deleteAll() {
+    public ResponseEntity deleteAllTodos() {
         todoService.deleteAll();
         return ResponseEntity.noContent().build();
     }

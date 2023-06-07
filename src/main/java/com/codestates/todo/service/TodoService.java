@@ -22,7 +22,7 @@ public class TodoService {
         this.beanUtils = beanUtils;
     }
 
-    public Todo creteTodo(Todo todo) {
+    public Todo createTodo(Todo todo) {
         return todoRepository.save(todo);
     }
 
