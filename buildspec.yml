@@ -14,7 +14,7 @@ phases:
       - echo $(basename ./build/libs/*.jar)
 artifacts:
   files:
-    - build/libs/*.jar
+    - build/libs/coffee-order-app.jar.jar
     - scripts/**
     - appspec.yml
   discard-paths: yes
