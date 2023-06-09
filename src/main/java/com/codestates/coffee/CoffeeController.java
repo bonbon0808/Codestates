@@ -1,7 +1,8 @@
 package com.codestates.coffee;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
@@ -26,5 +27,32 @@ public class CoffeeController {
 
     //---------------- 여기서 부터 아래에 코드를 구현하세요! -------------------//
     // 1. 커피 정보 수정을 위한 핸들러 메서드 구현
+    // korName -> 바닐라 빈 라떼로 수정
+    // price -> 5000 으로 수정
+
+    @PutMapping("/{coffeeId}")
+    public ResponseEntity updateCoffeeInfo(@PathVariable("coffeeId") long coffeeId,
+                                           @RequestParam("korName") String korName,
+                                           @RequestParam("price") String price) {
+        Map<String, Object> coffee1 = coffees.get(coffeeId);  // coffees 맵에서 coffeeId가 1인 커피 정보 가져오기
+        coffee1.put("korName","바닐라 빈 라떼");
+        coffee1.put("price", 5000);
+
+        coffees.put(coffeeId,coffee1);
+
+        return new ResponseEntity<>(coffee1, HttpStatus.OK);
+
+    }
+
+
+
     // 2. 커피 정보 삭제를 위한 핸들러 서드 구현
+    @DeleteMapping("/{coffeeId}")
+    public ResponseEntity deleteCoffeeInfo(@PathVariable("coffeeId") long coffeeId) {
+        Map<String, Object> coffee1 = coffees.get(coffeeId);
+        coffees.clear();
+
+        return new ResponseEntity<>(coffee1,HttpStatus.NO_CONTENT);
+    }
+
 }
