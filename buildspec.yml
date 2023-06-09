@@ -8,13 +8,13 @@ phases:
     commands:
       - echo Build Starting on `date`
       - chmod +x ./gradlew
-      - ./gradlew build
+      - ./gradlew bootJar
   post_build:
     commands:
       - echo $(basename ./build/libs/*.jar)
 artifacts:
   files:
-    - build/libs/coffee-order-app.jar.jar
+    - build/libs/coffee-order-app.jar
     - scripts/**
     - appspec.yml
   discard-paths: yes
