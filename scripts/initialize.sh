@@ -2,4 +2,4 @@
 # Change ownership of files in /home/ubuntu/build directory using sudo
 sudo chown -R ubuntu:ubuntu /home/ubuntu/build
 sudo chmod +x /home/ubuntu/build/**
-sudo mkdir "/var/log/coffee-order-app/app.log"
+sudo mkdir -p "/var/log/coffee-order-app/app.log"
