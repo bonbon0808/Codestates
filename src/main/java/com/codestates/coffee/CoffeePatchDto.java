@@ -4,7 +4,6 @@ import com.codestates.validator.NotSpace;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Pattern;
-import java.util.Optional;
 
 /**
  * <h3>DTO 실습 과제용 Solution 코드 포함</h3>
