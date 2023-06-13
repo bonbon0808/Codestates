@@ -1,4 +1,4 @@
-package com.codestates.coffee;
+package com.codestates.coffee.dto;
 
 import com.codestates.validator.NotSpace;
 import org.hibernate.validator.constraints.Range;
@@ -14,7 +14,7 @@ public class CoffeePatchDto {
     @Pattern(regexp = "^([A-Za-z])(\\s?[A-Za-z])*$", message = "커피명(영문)은 영문이어야 합니다. 예) Cafe Latte")
     private String engName;
 
-    @Range(min= 100, max= 50000)
+    @Range(min = 100, max = 50000)
     private Integer price;
 
     public long getCoffeeId() {
