@@ -1,11 +1,9 @@
 package com.codestates.order.controller;
 
-import com.codestates.coffee.entity.Coffee;
-import com.codestates.coffee.service.CoffeeService;
 import com.codestates.order.entity.Order;
-import com.codestates.order.service.OrderService;
 import com.codestates.order.dto.OrderPostDto;
 import com.codestates.order.dto.OrderResponseDto;
+import com.codestates.order.service.OrderService;
 import com.codestates.order.mapper.OrderMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,36 +16,28 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/v10/orders")
+@RequestMapping("/v5/orders")
 @Validated
 public class OrderController {
     private final OrderService orderService;
     private final OrderMapper mapper;
-    private final CoffeeService coffeeService;
 
-    public OrderController(OrderService orderService,
-                           OrderMapper mapper,
-                           CoffeeService coffeeService) {
+    public OrderController(OrderService orderService, OrderMapper mapper) {
         this.orderService = orderService;
         this.mapper = mapper;
-        this.coffeeService = coffeeService;
     }
 
     @PostMapping
     public ResponseEntity postOrder(@Valid @RequestBody OrderPostDto orderPostDto) {
-        Order order =
-                orderService.createOrder(mapper.orderPostDtoToOrder(orderPostDto));
-        List<Coffee> coffees = coffeeService.findOrderedCoffees(order);
-        return new ResponseEntity<>(mapper.orderToOrderResponseDto(order, coffees),
-                HttpStatus.CREATED);
+        Order order = orderService.createOrder(mapper.orderPostDtoToOrder(orderPostDto));
+        return new ResponseEntity<>(mapper.orderToOrderResponseDto(order), HttpStatus.CREATED);
     }
 
     @GetMapping("/{order-id}")
     public ResponseEntity getOrder(@PathVariable("order-id") @Positive long orderId) {
         Order order = orderService.findOrder(orderId);
-        List<Coffee> coffees = coffeeService.findOrderedCoffees(order);
-        return new ResponseEntity<>(mapper.orderToOrderResponseDto(order, coffees),
-                HttpStatus.OK);
+
+        return new ResponseEntity<>(mapper.orderToOrderResponseDto(order), HttpStatus.OK);
     }
 
     @GetMapping
@@ -55,20 +45,17 @@ public class OrderController {
         List<Order> orders = orderService.findOrders();
 
         List<OrderResponseDto> response =
-                orders
-                    .stream()
-                    .map(order -> {
-                        List<Coffee> coffees = coffeeService.findOrderedCoffees(order);
-                        return mapper.orderToOrderResponseDto(order, coffees);
-                    })
-                    .collect(Collectors.toList());
+                orders.stream()
+                        .map(order -> mapper.orderToOrderResponseDto(order))
+                        .collect(Collectors.toList());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{order-id}")
-    public ResponseEntity cancelOrder(@PathVariable("order-id") @Positive long orderId) {
-        orderService.cancelOrder(orderId);
+    public ResponseEntity cancelOrder(@PathVariable("order-id") long orderId) {
+        System.out.println("# cancel order");
+        orderService.cancelOrder();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
