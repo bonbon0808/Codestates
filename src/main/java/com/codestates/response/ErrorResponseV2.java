@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
  *     <li>int status</li>
  *     <li>String message</li>
  *     <li>private ErrorResponse(int status, String message)</li>
+ *     <li>{@link #of(BindingResult)}</li>
+ *     <li>{@link #of(Set<ConstraintViolation<?>>)}</li>
  *     <li>{@link #of(ExceptionCode)}</li>
  *     <li>{@link #of(HttpStatus)}</li>
  *     <li>{@link #of(int, String)}</li>
