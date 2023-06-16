@@ -36,7 +36,7 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberDto) {
+    public ResponseEntity postMember(@Validated @RequestBody MemberPostDto memberDto) {
         Member member = mapper.memberPostDtoToMember(memberDto);
 
         Member response = memberService.createMember(member);

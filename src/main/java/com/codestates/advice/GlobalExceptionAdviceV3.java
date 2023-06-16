@@ -2,6 +2,8 @@ package com.codestates.advice;
 
 import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
+import com.codestates.response.BindingResultErrorResponse;
+import com.codestates.response.ConstraintValidationErrorResponse;
 import com.codestates.response.ErrorResponseV1;
 import com.codestates.response.ErrorResponseV2;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,7 @@ import javax.validation.ConstraintViolationException;
  * <h3>애플리케이션 예외 처리 실습 과제용 Solution 코드 포함</h3>
  * GlobalExceptionAdvice는 애플리케이션에서 발생하는 예외를 처리하기 위한 다섯 개의 예외 처리 전용 메서드를 포함하고 있습니다.
  * 그 중에서 실습 과제를 위해 구현된 예외 처리 전용 메서드는 아래와 같이 세 개의 메서드입니다.
+ * BindingResult와 ConstraintViolationException을 통해서 얻은 에러 정보를 각각 분리해서 Error Response를 생성한 케이스.
  *
  * <h4>실습 과제를 위해 구현된 예외 처리 전용 메서드</h4>
  * <ul>
@@ -33,22 +36,22 @@ import javax.validation.ConstraintViolationException;
  * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html" target="_blank">@ResponseStatus</a>
  */
 @Slf4j
-//@RestControllerAdvice
-public class GlobalExceptionAdviceV2 {
+@RestControllerAdvice
+public class GlobalExceptionAdviceV3 {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponseV2 handleMethodArgumentNotValidException(
+    public BindingResultErrorResponse handleMethodArgumentNotValidException(
             MethodArgumentNotValidException e) {
-        final ErrorResponseV2 response = ErrorResponseV2.of(e.getBindingResult());
+        final BindingResultErrorResponse response = BindingResultErrorResponse.of(e.getBindingResult());
 
         return response;
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponseV2 handleConstraintViolationException(
+    public ConstraintValidationErrorResponse handleConstraintViolationException(
             ConstraintViolationException e) {
-        final ErrorResponseV2 response = ErrorResponseV2.of(e.getConstraintViolations());
+        final ConstraintValidationErrorResponse response = ConstraintValidationErrorResponse.of(e.getConstraintViolations());
 
         return response;
     }
