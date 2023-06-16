@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Error 인터페이스를 implements함으로써 Error Response의 필드가 공통화 됨.
+ */
 @Getter
 public class ConstraintViolationError implements Error {
     private String field;
