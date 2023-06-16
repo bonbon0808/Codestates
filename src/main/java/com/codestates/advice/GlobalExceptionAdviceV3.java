@@ -2,8 +2,7 @@ package com.codestates.advice;
 
 import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
-import com.codestates.response.BindingResultErrorResponse;
-import com.codestates.response.ConstraintValidationErrorResponse;
+import com.codestates.response.ErrorResponseV3;
 import com.codestates.response.ErrorResponseV1;
 import com.codestates.response.ErrorResponseV2;
 import lombok.extern.slf4j.Slf4j;
@@ -40,18 +39,18 @@ import javax.validation.ConstraintViolationException;
 public class GlobalExceptionAdviceV3 {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public BindingResultErrorResponse handleMethodArgumentNotValidException(
+    public ErrorResponseV3 handleMethodArgumentNotValidException(
             MethodArgumentNotValidException e) {
-        final BindingResultErrorResponse response = BindingResultErrorResponse.of(e.getBindingResult());
+        final ErrorResponseV3 response = ErrorResponseV3.of(e.getBindingResult());
 
         return response;
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ConstraintValidationErrorResponse handleConstraintViolationException(
+    public ErrorResponseV3 handleConstraintViolationException(
             ConstraintViolationException e) {
-        final ConstraintValidationErrorResponse response = ConstraintValidationErrorResponse.of(e.getConstraintViolations());
+        final ErrorResponseV3 response = ErrorResponseV3.of(e.getConstraintViolations());
 
         return response;
     }

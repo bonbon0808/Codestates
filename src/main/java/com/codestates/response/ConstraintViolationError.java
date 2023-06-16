@@ -8,19 +8,19 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
-public class ConstraintViolationError {
-    private String propertyPath;
-    private Object rejectedValue;
+public class ConstraintViolationError implements Error {
+    private String field;
+    private String rejectedValue;
     private String reason;
 
-    private ConstraintViolationError(String propertyPath, Object rejectedValue,
+    private ConstraintViolationError(String propertyPath, String rejectedValue,
                                      String reason) {
-        this.propertyPath = propertyPath;
+        this.field = propertyPath;
         this.rejectedValue = rejectedValue;
         this.reason = reason;
     }
 
-    public static List<ConstraintViolationError> of(Set<ConstraintViolation<?>> constraintViolations) {
+    public static List<Error> of(Set<ConstraintViolation<?>> constraintViolations) {
         // TODO Convert 공통화
         return constraintViolations.stream()
                 .map(constraintViolation -> new ConstraintViolationError(

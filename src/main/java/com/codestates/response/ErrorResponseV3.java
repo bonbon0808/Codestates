@@ -19,15 +19,20 @@ import java.util.Set;
  * </ul>
  */
 @Getter
-public class BindingResultErrorResponse {
-    private List<FieldError> errors;
+public class ErrorResponseV3 {
+    private List<Error> errors;
 
-    private BindingResultErrorResponse(List<FieldError> errors) {
+    private ErrorResponseV3(List<Error> errors) {
         this.errors = errors;
     }
 
-    public static BindingResultErrorResponse of(BindingResult bindingResult) {
-        List<FieldError> fieldError = FieldError.of(bindingResult);
-        return new BindingResultErrorResponse(fieldError);
+    public static ErrorResponseV3 of(BindingResult bindingResult) {
+        List<Error> fieldError = FieldError.of(bindingResult);
+        return new ErrorResponseV3(fieldError);
+    }
+
+    public static ErrorResponseV3 of(Set<ConstraintViolation<?>> violations) {
+        List<Error> constraintViolationErrors = ConstraintViolationError.of(violations);
+        return new ErrorResponseV3(constraintViolationErrors);
     }
 }
