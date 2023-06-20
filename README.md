@@ -21,7 +21,7 @@ Spring Data JPA 실습 과제 Solution 코드는 유어클래스의 실습 과�
   * [static 멤버 클래스를 이용한 DTO 클래스 리팩토링](#static-멤버-클래스를-이용한-dto-클래스-리팩토링)
   * [Mapstruct 매핑 예제 코드](#mapstruct-매핑-예제-코드)
   * [Value Object를 타입으로 사용하기 위한 예제 코드](#value-object를-타입으로-사용하기-위한-예제-코드)
-  * [Projection 기능 활용한 읽기 전용 엔티티 사용 예제 코드](#)
+  * [Projection 기능 활용한 읽기 전용 엔티티 사용 예제 코드](#projection-기능-활용한-읽기-전용-엔티티-사용-예제-코드)
   
 > 예제 코드에 대한 더 구체적인 정보는 아래에서 확인하세요.
 
@@ -76,10 +76,10 @@ Projection 기능을 이용하면 간단한 읽기 전용 엔티티를 사용할
 하지만 코드의 일관성을 위해 간단한 읽기 전용 엔티티를 위해서만 사용하는 것이 더 나은 선택일 수 있습니다.
 * 소스 코드 경로
   * MemberExcludeName
-    * [src/main/java/com/codestates/member/entity/MemberExcludeName](#)
+    * [src/main/java/com/codestates/member/entity/MemberExcludeName](https://github.com/codestates-seb/be-solution-jpa/blob/main/src/main/java/com/codestates/member/entity/MemberExcludeName.java)
   * MemberRepository
-    * [src/main/java/com/codestates/member/repository/MemberRepository/findByMemberId(long memberId)](#)
+    * [src/main/java/com/codestates/member/repository/MemberRepository/findByMemberId(long memberId)](https://github.com/codestates-seb/be-solution-jpa/blob/main/src/main/java/com/codestates/member/repository/MemberRepository.java)
   * MemberService
-    * [src/main/java/com/codestates/member/service/MemberService/findMemberExcludeName(long memberId)](#)
+    * [src/main/java/com/codestates/member/service/MemberService/findMemberExcludeName(long memberId)](https://github.com/codestates-seb/be-solution-jpa/blob/main/src/main/java/com/codestates/member/service/MemberService.java)
   * MemberController
-    * [src/main/java/com/codestates/member/service/MemberController/getMember2(@PathVariable("member-id") @Positive long memberId)](#)
+    * [src/main/java/com/codestates/member/service/MemberController/getMember2(@PathVariable("member-id") @Positive long memberId)](https://github.com/codestates-seb/be-solution-jpa/blob/main/src/main/java/com/codestates/member/controller/MemberController.java)
