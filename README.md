@@ -21,6 +21,7 @@ Spring Data JPA 실습 과제 Solution 코드는 유어클래스의 실습 과�
   * [static 멤버 클래스를 이용한 DTO 클래스 리팩토링](#static-멤버-클래스를-이용한-dto-클래스-리팩토링)
   * [Mapstruct 매핑 예제 코드](#mapstruct-매핑-예제-코드)
   * [Value Object를 타입으로 사용하기 위한 예제 코드](#value-object를-타입으로-사용하기-위한-예제-코드)
+  * [Projection 기능 활용한 읽기 전용 엔티티 사용 예제 코드](#)
   
 > 예제 코드에 대한 더 구체적인 정보는 아래에서 확인하세요.
 
@@ -59,11 +60,26 @@ Mapstruct의 @Mapping 애너테이션을 이용해 필드를 매핑하는 예제
 
 ### Value Object를 타입으로 사용하기 위한 예제 코드
 Spring Data JPA에서 Value Object를 데이터 타입으로 사용하기 위해 @Embeddable / @Embedded 애너테이션을 사용할 수 있습니다.
-* Money 타입 Value Object
-  * [src/main/java/com/codestates/values](https://github.com/codestates-seb/be-solution-jpa/tree/main/src/main/java/com/codestates/values)
-* Entity
-  * [src/main/java/com/codestates/coffee/entity](https://github.com/codestates-seb/be-solution-jpa/tree/main/src/main/java/com/codestates/coffee/entity)
-* Mapper
-  * [src/main/java/com/codestates/coffee/mapper](https://github.com/codestates-seb/be-solution-jpa/tree/main/src/main/java/com/codestates/coffee/mapper)
+* 소스 코드 경로
+  * Money 타입 Value Object
+    * [src/main/java/com/codestates/values](https://github.com/codestates-seb/be-solution-jpa/tree/main/src/main/java/com/codestates/values)
+  * Entity
+    * [src/main/java/com/codestates/coffee/entity](https://github.com/codestates-seb/be-solution-jpa/tree/main/src/main/java/com/codestates/coffee/entity)
+  * Mapper
+    * [src/main/java/com/codestates/coffee/mapper](https://github.com/codestates-seb/be-solution-jpa/tree/main/src/main/java/com/codestates/coffee/mapper)
 
 ---
+
+### Projection 기능 활용한 읽기 전용 엔티티 사용 예제 코드
+JPA에서는 Projection 이라는 기능을 통해 특정 엔티티 클래스의 필드 중에서 필요한 필드의 정보만 조회할 수 있습니다.
+Projection 기능을 이용하면 간단한 읽기 전용 엔티티를 사용할 수 있으므로 Mapper를 이용한 DTO 변환 과정을 거치지 않아도 됩니다.
+하지만 코드의 일관성을 위해 간단한 읽기 전용 엔티티를 위해서만 사용하는 것이 더 나은 선택일 수 있습니다.
+* 소스 코드 경로
+  * MemberExcludeName
+    * [src/main/java/com/codestates/member/entity/MemberExcludeName](#)
+  * MemberRepository
+    * [src/main/java/com/codestates/member/repository/MemberRepository/findByMemberId(long memberId)](#)
+  * MemberService
+    * [src/main/java/com/codestates/member/service/MemberService/findMemberExcludeName(long memberId)](#)
+  * MemberController
+    * [src/main/java/com/codestates/member/service/MemberController/getMember2(@PathVariable("member-id") @Positive long memberId)](#)

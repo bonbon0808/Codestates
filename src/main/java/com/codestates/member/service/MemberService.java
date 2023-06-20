@@ -3,6 +3,7 @@ package com.codestates.member.service;
 import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
 import com.codestates.member.entity.Member;
+import com.codestates.member.entity.MemberExcludeName;
 import com.codestates.member.repository.MemberRepository;
 import com.codestates.stamp.Stamp;
 import com.codestates.utils.CustomBeanUtils;
@@ -82,6 +83,20 @@ public class MemberService {
     public Member findVerifiedMember(long memberId) {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         Member findMember =
+                optionalMember.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        return findMember;
+    }
+
+    /**
+     * 회원 정보 중에 name 필드를 제외한 회원 정보만 리턴한다.
+     *
+     * @param memberId
+     * @return
+     */
+    public MemberExcludeName findMemberExcludeName(long memberId) {
+        Optional<MemberExcludeName> optionalMember = memberRepository.findByMemberId(memberId);
+        MemberExcludeName findMember =
                 optionalMember.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         return findMember;

@@ -1,14 +1,12 @@
 package com.codestates.member.controller;
 
 import com.codestates.member.dto.MemberDto;
+import com.codestates.member.entity.MemberExcludeName;
 import com.codestates.response.MultiResponseDto;
 import com.codestates.response.SingleResponseDto;
-import com.codestates.member.dto.MemberPatchDto;
-import com.codestates.member.dto.MemberPostDto;
 import com.codestates.member.entity.Member;
 import com.codestates.member.mapper.MemberMapper;
 import com.codestates.member.service.MemberService;
-import com.codestates.stamp.Stamp;
 import com.codestates.utils.UriCreator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -74,6 +72,15 @@ public class MemberController {
                 new SingleResponseDto<>(mapper.memberToMemberResponseDto(member))
                 , HttpStatus.OK);
     }
+
+//    @GetMapping("/{member-id}")
+//    public ResponseEntity getMember2(
+//            @PathVariable("member-id") @Positive long memberId) {
+//        MemberExcludeName member = memberService.findMemberExcludeName(memberId);
+//        return new ResponseEntity<>(
+//                new SingleResponseDto<>(member)
+//                , HttpStatus.OK);
+//    }
 
     @GetMapping
     public ResponseEntity getMembers(@Positive @RequestParam int page,
