@@ -59,8 +59,9 @@ public class GlobalExceptionAdvice {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse hanldeException(
+    public ErrorResponse hanldeException(Exception exception) {
 
-
-    )
+        final ErrorResponse response = ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR);
+        return response;
+    }
 }
