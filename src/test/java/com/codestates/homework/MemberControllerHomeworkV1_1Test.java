@@ -42,6 +42,13 @@ public class MemberControllerHomeworkV1_1Test {
     public void postMemberTest() throws Exception {
         /** 중복 코드 시작 */
         // given: MemberController의 postMember()를 테스트 하기 위한 테스트 데이터를 미리 생성
+        /**
+         * {
+         *     "email": "hjs6877@gmail.com",
+         *     "name": "홍길동1",
+         *     "phone": "010-1111-1111"
+         * }
+         */
         MemberDto.Post post = new MemberDto.Post("hgd@gmail.com",
                 "홍길동",
                 "010-1234-5678");
@@ -86,6 +93,7 @@ public class MemberControllerHomeworkV1_1Test {
 
         // MemberController의 patchMember()를 테스트하기 위한 테스트 데이터를 생성 후, DB에 업데이트
         MemberDto.Patch patch = MemberDto.Patch.builder().phone("010-2222-2222").build();
+
 
         String patchContent = gson.toJson(patch);
 
