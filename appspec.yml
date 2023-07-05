@@ -6,7 +6,7 @@ files:
     destination: /home/ubuntu/build
 hooks:
   BeforeInstall:
-    - location: server_clear.sh # 배포 디렉토리 삭제 작업
+    - location: server_clear.sh # 배포 디렉토리 삭제 작업 !!!
       timeout: 3000
       runas: ubuntu
   AfterInstall:
