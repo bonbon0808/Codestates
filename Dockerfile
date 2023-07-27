@@ -1,8 +1,3 @@
-FROM ubuntu:latest
-LABEL authors="so"
-
-ENTRYPOINT ["top", "-b"]
-
 # (1) base-image
 FROM openjdk:11
 
