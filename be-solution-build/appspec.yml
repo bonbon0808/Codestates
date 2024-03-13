@@ -1,0 +1,23 @@
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /home/ubuntu/build
+hooks:
+  BeforeInstall:
+    - location: server_clear.sh # 배포 디렉토리 삭제 작업 !!!
+      timeout: 3000
+      runas: ubuntu
+  AfterInstall:
+    - location: initialize.sh
+      timeout: 3000
+      runas: ubuntu
+  ApplicationStart:
+    - location: server_start.sh
+      timeout: 3000
+      runas: ubuntu
+  ApplicationStop:
+    - location: server_stop.sh
+      timeout: 3000
+      runas: ubuntu
